@@ -21,8 +21,13 @@ struct SuggestionsVue: View {
                         
                     }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Image(systemName: "person.fill")
-                        .foregroundStyle(.brownText)
+                    NavigationLink {
+                        MonProfilVue()
+                    } label: {
+                        Image(systemName: "person.fill")
+                            .foregroundStyle(.brownText)
+                    }
+
                 }
             }
         }
