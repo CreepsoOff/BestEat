@@ -10,12 +10,11 @@ import SwiftUI
 struct BadgeFiltre: View {
     let text: String
     let icon: String
-    let color: Color // La couleur pastel par défaut
     let isSFSymbol: Bool
     
-    // NOUVEAU : On ajoute un état pour savoir s'il est sélectionné
+    // État
     var isSelected: Bool
-    // NOUVEAU : L'action à faire quand on clique
+    // Action
     var action: () -> Void
     
     var body: some View {
@@ -31,22 +30,37 @@ struct BadgeFiltre: View {
                 
                 Text(text)
                     .font(.system(size: 14, weight: .semibold))
+
             }
             .padding(.vertical, 8)
             .padding(.horizontal, 16)
-            // --- LOGIQUE DES COULEURS ---
-            // Si sélectionné : Fond Bronze. Sinon : Fond Pastel
-            .background(isSelected ? Color("SelectedBrown") : color)
-            // Si sélectionné : Texte Blanc. Sinon : Texte Marron
-            .foregroundColor(isSelected ? .white : Color("BrownText"))
+            .foregroundStyle(isSelected ? .backgroundCream : .brownText)
+            .background(isSelected ? .brownText : .backgroundCream)
+          
+            
             // -----------------------------
+            
             .clipShape(Capsule())
-            // Animation fluide lors du changement de couleur
+            
+            // OMBRE : Ajout d'une petite ombre pour le relief quand il est blanc
+            .shadow(color: .black.opacity(isSelected ? 0 : 0.05), radius: 2, x: 0, y: 1)
+            
+            // BORDURE : Optionnelle, aide à la visibilité
+            .overlay(
+                Capsule()
+                    .stroke(Color("BrownText").opacity(0.1), lineWidth: isSelected ? 0 : 1)
+            )
             .animation(.easeInOut(duration: 0.2), value: isSelected)
         }
     }
 }
 
-//#Preview {
-//    BadgeFiltre(text: Viande.poisson.rawValue, icon: Viande.poisson.emoji, color: Color("Cream"), isSFSymbol: false, isSelected: false, action: )
-//}
+#Preview {
+    ZStack {
+        Color("BackgroundCream") // On simule le fond de l'app pour tester
+        HStack {
+            BadgeFiltre(text: "Test Off", icon: "🥩", isSFSymbol: false, isSelected: false, action: {})
+            BadgeFiltre(text: "Test On", icon: "🥩", isSFSymbol: false, isSelected: true, action: {})
+        }
+    }
+}
