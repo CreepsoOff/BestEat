@@ -36,20 +36,34 @@ struct FavorisVue: View {
                                     )
                                 
                                 VStack(spacing: 6) {
+                                    
                                     // TEXTE UNIQUE PAR ITEM
                                     Text(plat.nomPlat)
                                         .font(.headline)
                                     
                                     // BOUTON SOUS L’ITEM
-                                    Button(action: {
-                                        print("Bouton tapé pour : \(plat.nomPlat)")
-                                    }) {
-                                        Text("Action")
-                                            .padding(.horizontal, 16)
-                                            .padding(.vertical, 8)
-                                            .background(Color.orange.opacity(0.8))
-                                            .foregroundColor(.white)
-                                            .cornerRadius(10)
+                                    HStack {
+                                        Button(action: {
+                                            print("Bouton tapé pour : \(plat.nomPlat)")
+                                        }) {
+                                            Text("Action")
+                                                .padding(.horizontal, 16)
+                                                .padding(.vertical, 8)
+                                                .background(Color.orange.opacity(0.8))
+                                                .foregroundColor(.white)
+                                                .cornerRadius(10)
+                                        }
+
+                                        Button(action: {
+                                            print("Bouton tapé pour : \(plat.nomPlat)")
+                                        }) {
+                                            Text("Action")
+                                                .padding(.horizontal, 16)
+                                                .padding(.vertical, 8)
+                                                .background(Color.orange.opacity(0.8))
+                                                .foregroundColor(.white)
+                                                .cornerRadius(10)
+                                        }
                                     }
                                 }
                             }

@@ -30,37 +30,40 @@ struct BadgeFiltre: View {
                 
                 Text(text)
                     .font(.system(size: 14, weight: .semibold))
-
             }
             .padding(.vertical, 8)
             .padding(.horizontal, 16)
-            .foregroundStyle(isSelected ? .backgroundCream : .brownText)
-            .background(isSelected ? .brownText : .backgroundCream)
-          
             
-            // -----------------------------
+            // --- COULEURS ---
+            .foregroundStyle(isSelected ? .backgroundCream : .brownText)
+            
+            .background(isSelected ? .brownText : .backgroundCream)
             
             .clipShape(Capsule())
             
-            // OMBRE : Ajout d'une petite ombre pour le relief quand il est blanc
+            // Ombrage
             .shadow(color: .black.opacity(isSelected ? 0 : 0.05), radius: 2, x: 0, y: 1)
             
-            // BORDURE : Optionnelle, aide à la visibilité
+            // --- CONTOUR (Overlay) ---
             .overlay(
                 Capsule()
-                    .stroke(Color("BrownText").opacity(0.1), lineWidth: isSelected ? 0 : 1)
+                    .stroke(isSelected ? .clear : .brownText.opacity(0.15))
             )
             .animation(.easeInOut(duration: 0.2), value: isSelected)
         }
     }
 }
 
+
 #Preview {
     ZStack {
-        Color("BackgroundCream") // On simule le fond de l'app pour tester
+        Color.backgroundCream.ignoresSafeArea()
         HStack {
-            BadgeFiltre(text: "Test Off", icon: "🥩", isSFSymbol: false, isSelected: false, action: {})
-            BadgeFiltre(text: "Test On", icon: "🥩", isSFSymbol: false, isSelected: true, action: {})
+            // Test Inactif (Doit avoir le fond blanc et contour beige)
+            BadgeFiltre(text: "Poisson", icon: "🍣", isSFSymbol: false, isSelected: false, action: {})
+            
+            // Test Actif (Fond marron)
+            BadgeFiltre(text: "Poisson", icon: "🍣", isSFSymbol: false, isSelected: true, action: {})
         }
     }
 }
