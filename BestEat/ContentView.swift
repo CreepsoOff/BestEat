@@ -21,7 +21,7 @@ struct ContentView: View {
                 
             }
             Tab("Matching", systemImage: "heart.fill", value: 2) {
-                SuggestionsVue()
+                MatchingVue()
                 
             }
             Tab("Favoris", systemImage: "bookmark.fill", value: 3) {

@@ -187,12 +187,12 @@ struct RechercheVue: View {
         
         appearance.largeTitleTextAttributes = [
             .font: UIFont(name: "Redaction-Regular", size: 34) ?? UIFont.systemFont(ofSize: 34),
-            .foregroundColor: UIColor(named: "BrownText") ?? UIColor.black
+            .foregroundColor: UIColor(named: "BrownText") ?? UIColor.brownText
         ]
         
         appearance.titleTextAttributes = [
             .font: UIFont(name: "Redaction-Regular", size: 18) ?? UIFont.systemFont(ofSize: 18),
-            .foregroundColor: UIColor(named: "BrownText") ?? UIColor.black
+            .foregroundColor: UIColor(named: "BrownText") ?? UIColor.brownText
         ]
         
         UINavigationBar.appearance().standardAppearance = appearance

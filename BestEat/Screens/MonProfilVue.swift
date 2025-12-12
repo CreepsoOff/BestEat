@@ -134,6 +134,7 @@ struct MonProfilVue: View {
             }
             .background(backgroundColor.edgesIgnoringSafeArea(.all))
             .navigationTitle("")
+            .toolbar(.hidden, for: .tabBar) 
         }
     }
 }
