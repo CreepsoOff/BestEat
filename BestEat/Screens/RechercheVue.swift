@@ -186,7 +186,7 @@ struct RechercheVue: View {
         appearance.backgroundColor = UIColor(named: "BackgroundCream")
         
         appearance.largeTitleTextAttributes = [
-            .font: UIFont(name: "Redaction-Regular", size: 34) ?? UIFont.systemFont(ofSize: 34),
+            .font: UIFont(name: "Redaction-Bold", size: 34) ?? UIFont.systemFont(ofSize: 34),
             .foregroundColor: UIColor(named: "BrownText") ?? UIColor.brownText
         ]
         
