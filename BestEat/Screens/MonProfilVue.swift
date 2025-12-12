@@ -80,7 +80,7 @@ struct MonProfilVue: View {
                             Toggle("Halal", isOn: $halal)
                             Toggle("Végétarien", isOn: $vegetarien)
                             Toggle("Cacher", isOn: $cacher)
-                            Toggle("Végétalien (Vegan)", isOn: $vegan)
+                            Toggle("Végétalien", isOn: $vegan)
                         }
                         .padding()
                         .background(

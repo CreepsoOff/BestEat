@@ -7,34 +7,34 @@
 
 import SwiftUI
 
-// Exemple d'utilisation dans une vue
 struct RestaurantCard: View {
-    let restaurant: Restaurant // Ton modèle restaurant
+    let restaurant: Restaurant
     
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Rectangle()
+                // Image (Garde sa taille fixe)
+                Rectangle() // Remplace par ton Image(restaurant.image) plus tard
                     .frame(width: 97, height: 97)
                     .cornerRadius(16)
-                VStack(alignment: .leading) {
+                    .foregroundColor(.gray.opacity(0.3)) // Juste pour visualiser si pas d'image
+                
+                VStack(alignment: .leading, spacing: 4) { // Ajout d'un petit spacing pour la propreté
                     
                     Text(restaurant.nom)
-                        .font(.title3.bold())
+                        .font(.custom("Redaction-Bold", size: 18))
                         .foregroundStyle(.black)
+                        // Permet au texte d'être coupé proprement si trop long
+                        .lineLimit(1)
                     
-                    Text(
-                        """
-                        \(Text(restaurant.typologie.rawValue)
-                            .foregroundStyle(.black))\
-                        \(Text(" •")
-                            .foregroundStyle(.black))
-                        """
-                    )
-                    .font(.system(size: 14))
+                    Text("\(restaurant.typologie.rawValue) •")
+                        .font(.system(size: 14))
+                        .foregroundColor(.gray) // Souvent plus lisible en gris foncé
                     
                     Text(restaurant.desc)
                         .font(.system(size: 14))
+                        .lineLimit(2) // Limite la description à 2 lignes pour ne pas casser la hauteur
+                        .foregroundStyle(.black)
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
@@ -45,17 +45,21 @@ struct RestaurantCard: View {
                     }
                     .clipShape(Capsule())
                 }
+                .foregroundStyle(.brownText) // Si tu as défini cette couleur dans tes assets
+                
+                Spacer() // Pousse le contenu vers la gauche
             }
         }
-        .frame(width: 312, height: 113)
+        // --- CORRECTION ICI ---
+        // On enlève width: 312 et on met maxWidth: .infinity
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(height: 113)
+        // ---------------------
         .padding()
         .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 16))
-        
-        
-        
     }
 }
 
 #Preview {
-    RestaurantCard(restaurant: restaurants[2])
+    RestaurantCard(restaurant: restaurants[11])
 }

@@ -19,6 +19,7 @@ struct SuggestionsVue: View {
                     Text("Suggestions")
                         .font(.custom("Redaction-Regular", size: 32))
                         
+                        
                     }
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {

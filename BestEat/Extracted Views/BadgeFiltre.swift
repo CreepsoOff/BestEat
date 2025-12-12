@@ -59,10 +59,10 @@ struct BadgeFiltre: View {
     ZStack {
         Color.backgroundCream.ignoresSafeArea()
         HStack {
-            // Test Inactif (Doit avoir le fond blanc et contour beige)
+            // Off
             BadgeFiltre(text: "Poisson", icon: "🍣", isSFSymbol: false, isSelected: false, action: {})
             
-            // Test Actif (Fond marron)
+            // On
             BadgeFiltre(text: "Poisson", icon: "🍣", isSFSymbol: false, isSelected: true, action: {})
         }
     }
