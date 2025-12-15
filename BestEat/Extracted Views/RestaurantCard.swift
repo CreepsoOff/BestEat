@@ -13,27 +13,34 @@ struct RestaurantCard: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                // Image (Garde sa taille fixe)
-                Rectangle() // Remplace par ton Image(restaurant.image) plus tard
-                    .frame(width: 97, height: 97)
-                    .cornerRadius(16)
-                    .foregroundColor(.gray.opacity(0.3)) // Juste pour visualiser si pas d'image
+                // Image
+                if let premierPlat = restaurant.menu.first {
+                    Image(premierPlat.imagePlat)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 97, height: 97)
+                        .clipShape(RoundedRectangle(cornerRadius: 16))
+                } else {
+                    // Sécurité : Si le menu est vide, on garde le rectangle gris
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.3))
+                        .frame(width: 97, height: 97)
+                        .cornerRadius(16)
+                }
                 
-                VStack(alignment: .leading, spacing: 4) { // Ajout d'un petit spacing pour la propreté
+                VStack(alignment: .leading, spacing: 4) {
                     
                     Text(restaurant.nom)
                         .font(.custom("Redaction-Bold", size: 18))
                         .foregroundStyle(.black)
-                        // Permet au texte d'être coupé proprement si trop long
                         .lineLimit(1)
                     
                     Text("\(restaurant.typologie.rawValue) •")
                         .font(.system(size: 14))
-                        .foregroundColor(.gray) // Souvent plus lisible en gris foncé
-                    
+                        .foregroundColor(.gray)
                     Text(restaurant.desc)
                         .font(.system(size: 14))
-                        .lineLimit(2) // Limite la description à 2 lignes pour ne pas casser la hauteur
+                        .lineLimit(2)
                         .foregroundStyle(.black)
                     
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -47,7 +54,7 @@ struct RestaurantCard: View {
                 }
                 .foregroundStyle(.brownText) // Si tu as défini cette couleur dans tes assets
                 
-                Spacer() // Pousse le contenu vers la gauche
+                Spacer() 
             }
         }
         // --- CORRECTION ICI ---
@@ -61,5 +68,5 @@ struct RestaurantCard: View {
 }
 
 #Preview {
-    RestaurantCard(restaurant: restaurants[11])
+    RestaurantCard(restaurant: restaurants[0])
 }

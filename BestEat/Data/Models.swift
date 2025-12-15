@@ -182,12 +182,12 @@ enum Tag: String, CaseIterable {
 
 
 enum Emotion: String {
-    case joie = "Joie"
-    case tristesse = "Tristesse"
-    case colere = "Colère"
-    case peur = "Peur"
-    case surprise = "Surprise"
-    case degout = "Dégoût"
+    case joie = "Joyeux"
+    case tristesse = "Triste"
+    case colere = "En colère"
+    case peur = "Apeuré"
+    case surprise = "Surpris"
+    case degout = "Dégoûté"
     
     var emoji: String {
         switch self {
@@ -223,4 +223,28 @@ struct Profil {
     var budget: Budget
     var regime: [RegimeAlimentaire]
     var emotion: [Emotion]
+}
+
+
+// Ajoutez CaseIterable et Identifiable aux énums existants pour les menus
+
+extension Emotion: CaseIterable, Identifiable {
+    var id: Self { self }
+}
+
+extension ModeDeplacement: CaseIterable, Identifiable {
+    var id: Self { self }
+}
+
+extension Budget: CaseIterable, Identifiable {
+    var id: Self { self }
+}
+
+extension RegimeAlimentaire: CaseIterable, Identifiable {
+    var id: Self { self }
+}
+
+// Viande est déjà CaseIterable, on ajoute juste Identifiable
+extension Viande: Identifiable {
+    var id: Self { self }
 }

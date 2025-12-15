@@ -17,7 +17,7 @@ struct FavorisVue: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 
                 VStack(spacing: 20) {
                     Spacer().frame(height: 20)
@@ -79,9 +79,11 @@ struct FavorisVue: View {
             
         }
         .navigationBarTitle("")
+        .tabBarMinimizeBehavior(.onScrollDown)
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Text("Mes Favoris")
+        
                 
             }
         }

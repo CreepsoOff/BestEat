@@ -15,11 +15,11 @@ struct TagCapsule: View {
             // L'icône
             Image(systemName: tag.icon)
                 .font(.system(size: 10, weight: .bold))
-//            .foregroundColor(Color(red: 0.43, green: 0.27, blue: 0.16))
+
             
             Text(tag.rawValue)
                 .font(.system(size: 12, weight: .semibold))
-//            .foregroundColor(Color(red: 0.43, green: 0.27, blue: 0.16))
+
         }
         .foregroundStyle(.brownText)
         .padding(.vertical, 5)

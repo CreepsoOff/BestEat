@@ -13,12 +13,12 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: $ongletSelectionne) {
             Tab("Suggestions", systemImage: "star.fill", value: 0) {
-                SuggestionsVue()
+                OnBoarding()
                 
             }
             Tab("Carte", systemImage: "map.fill", value: 1) {
-                CarteVue()
-                
+                CarteVue(namespace: nil, showFullMap: nil)
+
             }
             Tab("Matching", systemImage: "heart.fill", value: 2) {
                 MatchingVue()
@@ -36,6 +36,7 @@ struct ContentView: View {
             
         }
         .tabViewStyle(.sidebarAdaptable)
+        .tint(.orange)
         
     }
 }

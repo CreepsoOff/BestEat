@@ -181,23 +181,31 @@ struct RechercheVue: View {
     
     /// Afficher le navigationTitle avec une police d'écriture personnalisée.
     func setupCustomNavBar() {
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        appearance.backgroundColor = UIColor(named: "BackgroundCream")
+        let standard = UINavigationBarAppearance()
+        standard.configureWithOpaqueBackground()
         
-        appearance.largeTitleTextAttributes = [
+        standard.backgroundColor = UIColor(named: "BackgroundCream")?
+            .withAlphaComponent(0.5)
+
+        standard.largeTitleTextAttributes = [
             .font: UIFont(name: "Redaction-Bold", size: 34) ?? UIFont.systemFont(ofSize: 34),
-            .foregroundColor: UIColor(named: "BrownText") ?? UIColor.brownText
+            .foregroundColor: UIColor(named: "BrownText") ?? UIColor.brown
         ]
-        
-        appearance.titleTextAttributes = [
+        standard.titleTextAttributes = [
             .font: UIFont(name: "Redaction-Regular", size: 18) ?? UIFont.systemFont(ofSize: 18),
-            .foregroundColor: UIColor(named: "BrownText") ?? UIColor.brownText
+            .foregroundColor: UIColor(named: "BrownText") ?? UIColor.brown
         ]
-        
-        UINavigationBar.appearance().standardAppearance = appearance
-        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+
+        let scrollEdge = UINavigationBarAppearance()
+        scrollEdge.configureWithTransparentBackground()
+
+        scrollEdge.largeTitleTextAttributes = standard.largeTitleTextAttributes
+        scrollEdge.titleTextAttributes = standard.titleTextAttributes
+
+        UINavigationBar.appearance().standardAppearance = standard
+        UINavigationBar.appearance().scrollEdgeAppearance = scrollEdge
     }
+
 }
 
 #Preview {

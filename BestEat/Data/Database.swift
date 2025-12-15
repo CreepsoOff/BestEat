@@ -1,19 +1,5 @@
 //
 //  Database.swift
-//  BestHEAT
-//
-//  Created by apprenant96 on 10/12/2025.
-//
-
-//
-//  Database.swift
-//  BestEat
-//
-//  Created by apprenant98 on 10/12/2025.
-//
-
-//
-//  Database.swift
 //  BestEat
 //
 //  Created by apprenant98 on 10/12/2025.
@@ -34,12 +20,12 @@ var restaurants: [Restaurant] = [
                 nomPlat: "Truffle Pasta",
                 descriptionPlat:
                     "Pâtes fraîches, crème de truffe noire, mascarpone.",
-                imagePlat: "truffle_pasta"
+                imagePlat: "bellezzaplat"
             ),
             Plat(
                 nomPlat: "Tiramisu della Nonna",
                 descriptionPlat: "Servi à la louche, généreux et crémeux.",
-                imagePlat: "tiramisu"
+                imagePlat: "dessert"
             ),
         ],
         horaireOuverture: OuvertureResto(
@@ -92,7 +78,7 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Tomahawk d'Irlande",
                 descriptionPlat: "Pièce de 1.2kg maturée sur os.",
-                imagePlat: "tomahawk"
+                imagePlat: "beefartplat"
             ),
             Plat(
                 nomPlat: "Purée à la truffe",
@@ -111,7 +97,7 @@ var restaurants: [Restaurant] = [
         categorie: .steakHouse,
         typologie: .gastronomie,
         viandes: [.boeuf, .agneau],
-        tag: [.cosy, .fait_maison],
+        tag: [.cosy, .fait_maison, .halal],
         estVisite: false,
         adresse: "115 Rue de Gand, 59800 Lille",
         image: "beefart",
@@ -130,7 +116,7 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Le T-Rex",
                 descriptionPlat: "Burger double poulet frit, cheddar, bacon.",
-                imagePlat: "t_rex"
+                imagePlat: "raptorshackplat"
             ),
             Plat(
                 nomPlat: "Loaded Fries",
@@ -175,7 +161,7 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Avocado Toast",
                 descriptionPlat: "Pain complet, avocat, grenade, oeuf poché.",
-                imagePlat: "avocado_toast"
+                imagePlat: "wearearaplat"
             ),
             Plat(
                 nomPlat: "Pancakes Banane",
@@ -219,7 +205,7 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Saint-Jacques snackées",
                 descriptionPlat: "Fondue de poireaux et beurre blanc.",
-                imagePlat: "saint_jacques"
+                imagePlat: "lecumedesmersplat"
             ),
             Plat(
                 nomPlat: "Plateau Royal",
@@ -270,7 +256,7 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Potjevleesch",
                 descriptionPlat: "Les 4 viandes en gelée, frites fraîches.",
-                imagePlat: "potjevleesch"
+                imagePlat: "leporthosplat"
             ),
             Plat(
                 nomPlat: "Andouillette d'Arras",
@@ -309,7 +295,7 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Welsh Complet",
                 descriptionPlat: "Cheddar, pain, jambon, oeuf, bière.",
-                imagePlat: "welsh"
+                imagePlat: "auvieuxdelavieilleplat"
             ),
             Plat(
                 nomPlat: "Mousse au Spéculoos",
@@ -360,7 +346,7 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Lasagnes Végétales",
                 descriptionPlat: "Légumes de saison rôtis, béchamel cajou.",
-                imagePlat: "lasagnes_vegetales"
+                imagePlat: "itsybitsyplat"
             ),
             Plat(
                 nomPlat: "Carrot Cake",
@@ -405,12 +391,12 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Tarte Chèvre Épinard",
                 descriptionPlat: "Pâte brisée maison, servie avec salade.",
-                imagePlat: "tarte_chevre_epinard"
+                imagePlat: "honeypieplat"
             ),
             Plat(
                 nomPlat: "Cheesecake",
                 descriptionPlat: "Coulis de fruits rouges.",
-                imagePlat: "cheesecake"
+                imagePlat: "dessert"
             ),
         ],
         horaireOuverture: OuvertureResto(
@@ -443,7 +429,7 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Poulet Tikka Massala",
                 descriptionPlat: "Sauce onctueuse aux épices douces.",
-                imagePlat: "tikka_masala"
+                imagePlat: "maharajaplat"
             ),
             Plat(
                 nomPlat: "Cheese Naan",
@@ -501,7 +487,7 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Assiette Découverte",
                 descriptionPlat: "Houmous, moutabal, taboulé, kebbeh.",
-                imagePlat: "assiette_decouverte"
+                imagePlat: "layalinaplat"
             ),
             Plat(
                 nomPlat: "Chiche Taouk",
@@ -557,7 +543,7 @@ var restaurants: [Restaurant] = [
                 nomPlat: "Le Maroilles",
                 descriptionPlat:
                     "Steak Charolais, crème de Maroilles, oignons confits.",
-                imagePlat: "burger_maroilles"
+                imagePlat: "lesfrancsburgerplat"
             ),
             Plat(
                 nomPlat: "Frites au gras de boeuf",
@@ -608,7 +594,7 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Tajine Agneau Pruneaux",
                 descriptionPlat: "Sucré-salé avec amandes grillées.",
-                imagePlat: "tajine_pruneaux"
+                imagePlat: "mamouniaplat"
             ),
             Plat(
                 nomPlat: "Thé à la menthe",
@@ -659,7 +645,7 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Assiette Mixte",
                 descriptionPlat: "Adana, côtelette, poulet, boulgour.",
-                imagePlat: "assiette_mixte"
+                imagePlat: "efesplat"
             ),
             Plat(
                 nomPlat: "Kunefe",
@@ -702,7 +688,7 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Pad Thaï Crevettes",
                 descriptionPlat: "Nouilles de riz sautées, cacahuètes.",
-                imagePlat: "pad_thai"
+                imagePlat: "meetpeopleplat"
             ),
             Plat(
                 nomPlat: "Tigre qui pleure",
