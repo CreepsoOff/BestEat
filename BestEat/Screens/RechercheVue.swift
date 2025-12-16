@@ -183,6 +183,8 @@ struct RechercheVue: View {
     func setupCustomNavBar() {
         let standard = UINavigationBarAppearance()
         standard.configureWithOpaqueBackground()
+        standard.shadowColor = .clear 
+
         
         standard.backgroundColor = UIColor(named: "BackgroundCream")?
             .withAlphaComponent(0.5)
@@ -201,6 +203,7 @@ struct RechercheVue: View {
 
         scrollEdge.largeTitleTextAttributes = standard.largeTitleTextAttributes
         scrollEdge.titleTextAttributes = standard.titleTextAttributes
+        
 
         UINavigationBar.appearance().standardAppearance = standard
         UINavigationBar.appearance().scrollEdgeAppearance = scrollEdge
