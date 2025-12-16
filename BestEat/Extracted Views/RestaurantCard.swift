@@ -52,16 +52,13 @@ struct RestaurantCard: View {
                     }
                     .clipShape(Capsule())
                 }
-                .foregroundStyle(.brownText) // Si tu as défini cette couleur dans tes assets
+                .foregroundStyle(.brownText)
                 
                 Spacer() 
             }
         }
-        // --- CORRECTION ICI ---
-        // On enlève width: 312 et on met maxWidth: .infinity
         .frame(maxWidth: .infinity, alignment: .leading)
         .frame(height: 113)
-        // ---------------------
         .padding()
         .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 16))
     }

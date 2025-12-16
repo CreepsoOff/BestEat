@@ -11,7 +11,8 @@ struct MatchingVue: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.backgroundCream.ignoresSafeArea()
+                Color.backgroundCream
+                    .ignoresSafeArea()
                 Text("Matching")
             }
             .navigationBarTitle("")
@@ -19,9 +20,10 @@ struct MatchingVue: View {
                 ToolbarItem(placement: .principal){
                     Text("Matching")
                         .font(.custom("Redaction-Regular", size: 32))
+                        .foregroundStyle(.brownText)
+                        .padding(.top, 10)
                     
                 }
-                // AJOUT DU BOUTON PROFIL
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
                         MonProfilVue()

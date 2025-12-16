@@ -20,7 +20,6 @@ struct OnBoarding: View {
     @Namespace private var mapNamespace
     @State private var showFullMap = false
 
-
     @State private var position: MapCameraPosition = .region(
         MKCoordinateRegion(
             center: CLLocationCoordinate2D(
@@ -35,27 +34,22 @@ struct OnBoarding: View {
         NavigationStack {
             ZStack {
                 Color("Background").ignoresSafeArea()
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 30) {
 
-                VStack {
+                        interactiveSentenceView
 
-                    ScrollView {
-                        VStack(alignment: .leading, spacing: 30) {
-
-                            interactiveSentenceView
-
-                            Map(position: $position)
-                                .frame(height: 300)
-                                .clipShape(RoundedRectangle(cornerRadius: 30))
-                                .matchedGeometryEffect(id: "map", in: mapNamespace)
-                                .onTapGesture {
-                                    withAnimation(.easeInOut(duration: 0.35)) {
-                                        showFullMap = true
-                                    }
+                        Map(position: $position)
+                            .frame(height: 300)
+                            .clipShape(RoundedRectangle(cornerRadius: 30))
+                            .matchedGeometryEffect(id: "map", in: mapNamespace)
+                            .onTapGesture {
+                                withAnimation(.easeInOut(duration: 0.35)) {
+                                    showFullMap = true
                                 }
-                                .padding(.horizontal)
-                            Spacer()
-                        }
-                        .padding(.top, 20)
+                            }
+                            .padding(.horizontal)
+                        Spacer()
                     }
                 }
                 if showFullMap {
@@ -83,8 +77,6 @@ struct OnBoarding: View {
             }
             .buttonStyle(.plain)
 
-            
-
             Menu {
                 ForEach(Viande.allCases, id: \.self) { v in
                     Button(v.rawValue) {
@@ -95,7 +87,6 @@ struct OnBoarding: View {
                 viandeLine()
             }
             .buttonStyle(.plain)
-
 
             Menu {
                 ForEach(ModeDeplacement.allCases, id: \.self) { m in
@@ -108,7 +99,6 @@ struct OnBoarding: View {
             }
             .buttonStyle(.plain)
 
-
             Menu {
                 ForEach(RegimeAlimentaire.allCases, id: \.self) { r in
                     Button(r.rawValue) {
@@ -119,7 +109,6 @@ struct OnBoarding: View {
                 regimeLine()
             }
             .buttonStyle(.plain)
-
 
             Menu {
                 ForEach(Budget.allCases, id: \.self) { b in
@@ -134,6 +123,47 @@ struct OnBoarding: View {
 
         }
         .padding(.horizontal)
+        
+        .onDisappear {
+            showFullMap = false
+        }
+        
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text(showFullMap ? "Carte" : "Suggestions")
+                    .font(.custom("Redaction-Regular", size: 32))
+                    .padding(.top, 10)
+                    .foregroundStyle(.brownText)
+                    .contentTransition(.numericText())
+                    .animation(.bouncy, value: showFullMap)
+
+            }
+            
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                
+                if showFullMap {
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.35)) {
+                            showFullMap = false
+                        }
+                    } label: {
+                        Image(systemName: "xmark")
+                            .bold()
+                            .foregroundStyle(.brownText)
+                    }
+
+                }else{
+                    
+                    NavigationLink {
+                        MonProfilVue()
+                    } label: {
+                        Image(systemName: "person.fill")
+                            .foregroundStyle(.brownText)
+                    }
+                }
+            }
+        }
     }
 
     private func emotionLine() -> Text {
@@ -144,7 +174,7 @@ struct OnBoarding: View {
                 .foregroundStyle(.brownText))\
             \(Text("\(selectedEmotion.rawValue.lowercased()) ⌄")
                 .font(.custom("Redaction-Bold", size: 40))
-                .foregroundStyle(.orange))\
+                .foregroundStyle(.deepOrange))\
             \(Text(" et j'ai")
                 .font(.custom("Redaction-Regular", size: 24))
                 .foregroundStyle(.brownText))
@@ -160,7 +190,7 @@ struct OnBoarding: View {
                 .foregroundStyle(.brownText))\
             \(Text("\(selectedViande.rawValue.lowercased()) ⌄")
                 .font(.custom("Redaction-Bold", size: 40))
-                .foregroundStyle(.orange))\
+                .foregroundStyle(.lightOrange))\
             \(Text(" je vais")
                 .font(.custom("Redaction-Regular", size: 24))
                 .foregroundStyle(.brownText))
@@ -176,7 +206,7 @@ struct OnBoarding: View {
                 .foregroundStyle(.brownText))\
             \(Text("\(selectedDeplacement.rawValue.lowercased()) ⌄")
                 .font(.custom("Redaction-Bold", size: 40))
-                .foregroundStyle(.orange))\
+                .foregroundStyle(.deepOrange))\
             \(Text(" et il")
                 .font(.custom("Redaction-Regular", size: 24))
                 .foregroundStyle(.brownText))
@@ -191,8 +221,8 @@ struct OnBoarding: View {
                 .font(.custom("Redaction-Regular", size: 24))
                 .foregroundStyle(.brownText))\
             \(Text("\(selectedRegime.rawValue.lowercased()) ⌄")
-                .font(.custom("Redaction-Bold", size: 40))
-                .foregroundStyle(.orange))
+                .font(.custom("Redaction-Bold", size: 38))
+                .foregroundStyle(.lightOrange))
             """
         )
     }
@@ -205,12 +235,16 @@ struct OnBoarding: View {
                 .foregroundStyle(.brownText))\
             \(Text("\(selectedBudget.rawValue) ⌄")
                 .font(.custom("Redaction-Bold", size: 40))
-                .foregroundStyle(.orange))
+                .foregroundStyle(.deepOrange))
             """
         )
     }
+    
+
 
 }
+
+
 
 #Preview {
     OnBoarding()

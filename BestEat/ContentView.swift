@@ -35,8 +35,8 @@ struct ContentView: View {
             }
             
         }
-        .tabViewStyle(.sidebarAdaptable)
-        .tint(.orange)
+        .tint(.deepOrange)
+        
         
     }
 }
