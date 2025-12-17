@@ -43,6 +43,10 @@ struct MenuVue: View {
                                     .foregroundStyle(.gray)
                                     .lineLimit(4)
                                     .fixedSize(horizontal: false, vertical: true)
+                                
+                                Text("20€")
+                                    .font(.custom("Redaction-Regular", size: 18))
+                                    .foregroundStyle(.black)
                             }
                             .padding()
                             .frame(height: 130)

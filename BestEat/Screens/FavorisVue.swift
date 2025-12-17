@@ -16,7 +16,7 @@ struct FavorisVue: View {
             ScrollView(showsIndicators: false) {
 
                 NavigationLink {
-                    RestaurantInfoDetails(restaurant: restaurants[2])
+                    RestaurantInfoDetails(restaurant: restaurants[8])
                 } label: {
                     Text("InfoDetails")
                 }
