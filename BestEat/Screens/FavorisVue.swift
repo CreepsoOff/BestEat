@@ -15,12 +15,6 @@ struct FavorisVue: View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
 
-                NavigationLink {
-                    RestaurantInfoDetails(restaurant: restaurants[8])
-                } label: {
-                    Text("InfoDetails")
-                }
-
                 VStack(spacing: 20) {
 
                     LazyVGrid(columns: columns, spacing: 20) {

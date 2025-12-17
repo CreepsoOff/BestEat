@@ -63,13 +63,15 @@ class Plat: Identifiable {
     let descriptionPlat: String
     let imagePlat: String
     var isFavori: Bool
+    let prix: Double
     
-    init(id: UUID = UUID(), nomPlat: String, descriptionPlat: String, imagePlat: String, isFavori: Bool = false) {
+    init(id: UUID = UUID(), nomPlat: String, descriptionPlat: String, imagePlat: String, isFavori: Bool = false, prix: Double) {
         self.id = id
         self.nomPlat = nomPlat
         self.descriptionPlat = descriptionPlat
         self.imagePlat = imagePlat
         self.isFavori = isFavori
+        self.prix = prix
     }
 }
 
