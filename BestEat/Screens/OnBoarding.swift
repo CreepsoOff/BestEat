@@ -97,7 +97,7 @@ struct OnBoarding: View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text(showFullMap ? "Carte" : "Mes envies")
-                        .font(.custom("Redaction-Regular", size: 32))
+                        .font(.custom("Redaction-Regular", size: 24))
                         .padding(.top, 10)
                         .foregroundStyle(.brownText)
                         .contentTransition(.numericText())

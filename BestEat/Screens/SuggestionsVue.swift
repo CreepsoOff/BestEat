@@ -63,7 +63,7 @@ struct SuggestionsVue: View {
                                 ForEach(restaurantsSuggeres) { resto in
                                     // Lien vers le détail
                                     NavigationLink {
-                                        MenuVue(restaurant: resto)
+                                        RestaurantInfoDetails(restaurant: resto)
                                     } label: {
                                         SuggestionCard(restaurant: resto)
                                     }

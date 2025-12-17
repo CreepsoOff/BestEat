@@ -12,49 +12,31 @@ var restaurants: [Restaurant] = [
     // 1. Italien
     Restaurant(
         nom: "La Bellezza",
-        desc:
-            "Une escapade authentique au cœur du Vieux-Lille avec des produits directement venus d'Italie.",
+        desc: "Une escapade authentique au cœur du Vieux-Lille avec des produits directement venus d'Italie.",
         note: 4.8,
         menu: [
             Plat(
                 nomPlat: "Truffle Pasta",
-                descriptionPlat:
-                    "Pâtes fraîches, crème de truffe noire, mascarpone.",
-                imagePlat: "bellezzaplat"
+                descriptionPlat: "Pâtes fraîches, crème de truffe noire, mascarpone.",
+                imagePlat: "bellezzaplat",
+                prix: 18.0
             ),
             Plat(
                 nomPlat: "Tiramisu della Nonna",
                 descriptionPlat: "Servi à la louche, généreux et crémeux.",
-                imagePlat: "dessert"
+                imagePlat: "dessert",
+                prix: 8.5
             ),
         ],
         horaireOuverture: OuvertureResto(
             jours: [.mardi, .mercredi, .jeudi, .vendredi, .samedi, .dimanche],
             horaires: [
-                HoraireOuvertureItem(
-                    jour: .mardi,
-                    horaire: "12h00 - 14h30, 19h00 - 22h30"
-                ),
-                HoraireOuvertureItem(
-                    jour: .mercredi,
-                    horaire: "12h00 - 14h30, 19h00 - 22h30"
-                ),
-                HoraireOuvertureItem(
-                    jour: .jeudi,
-                    horaire: "12h00 - 14h30, 19h00 - 22h30"
-                ),
-                HoraireOuvertureItem(
-                    jour: .vendredi,
-                    horaire: "12h00 - 14h30, 19h00 - 23h00"
-                ),
-                HoraireOuvertureItem(
-                    jour: .samedi,
-                    horaire: "12h00 - 15h00, 19h00 - 23h00"
-                ),
-                HoraireOuvertureItem(
-                    jour: .dimanche,
-                    horaire: "12h00 - 15h00, 19h00 - 22h30"
-                ),
+                HoraireOuvertureItem(jour: .mardi, horaire: "12h00 - 14h30, 19h00 - 22h30"),
+                HoraireOuvertureItem(jour: .mercredi, horaire: "12h00 - 14h30, 19h00 - 22h30"),
+                HoraireOuvertureItem(jour: .jeudi, horaire: "12h00 - 14h30, 19h00 - 22h30"),
+                HoraireOuvertureItem(jour: .vendredi, horaire: "12h00 - 14h30, 19h00 - 23h00"),
+                HoraireOuvertureItem(jour: .samedi, horaire: "12h00 - 15h00, 19h00 - 23h00"),
+                HoraireOuvertureItem(jour: .dimanche, horaire: "12h00 - 15h00, 19h00 - 22h30"),
             ]
         ),
         categorie: .brasserie,
@@ -68,22 +50,23 @@ var restaurants: [Restaurant] = [
         longitude: 3.05880
     ),
 
-    // 2. Beef Art – MANDATORY
+    // 2. Beef Art
     Restaurant(
         nom: "Beef Art",
-        desc:
-            "Le temple de la viande maturée à Lille. Cadre chic et pièces de bœuf d'exception.",
+        desc: "Le temple de la viande maturée à Lille. Cadre chic et pièces de bœuf d'exception.",
         note: 4.7,
         menu: [
             Plat(
                 nomPlat: "Tomahawk d'Irlande",
                 descriptionPlat: "Pièce de 1.2kg maturée sur os.",
-                imagePlat: "beefartplat"
+                imagePlat: "beefartplat",
+                prix: 85.0
             ),
             Plat(
                 nomPlat: "Purée à la truffe",
                 descriptionPlat: "L'accompagnement signature de la maison.",
-                imagePlat: "puree_truffe"
+                imagePlat: "puree_truffe",
+                prix: 6.0
             ),
         ],
         horaireOuverture: OuvertureResto(
@@ -106,29 +89,27 @@ var restaurants: [Restaurant] = [
         isLiked: true
     ),
 
-    // 3. Fast-Food Lillois
+    // 3. Raptor Shack
     Restaurant(
         nom: "Raptor Shack",
-        desc:
-            "Street food de qualité, spécialisé dans le poulet frit et les sauces maison.",
+        desc: "Street food de qualité, spécialisé dans le poulet frit et les sauces maison.",
         note: 4.5,
         menu: [
             Plat(
                 nomPlat: "Le T-Rex",
                 descriptionPlat: "Burger double poulet frit, cheddar, bacon.",
-                imagePlat: "raptorshackplat"
+                imagePlat: "raptorshackplat",
+                prix: 12.90
             ),
             Plat(
                 nomPlat: "Loaded Fries",
                 descriptionPlat: "Frites, sauce fromagère, oignons frits.",
-                imagePlat: "loaded_fries"
+                imagePlat: "loaded_fries",
+                prix: 6.50
             ),
         ],
         horaireOuverture: OuvertureResto(
-            jours: [
-                .lundi, .mardi, .mercredi, .jeudi, .vendredi, .samedi,
-                .dimanche,
-            ],
+            jours: [.lundi, .mardi, .mercredi, .jeudi, .vendredi, .samedi, .dimanche],
             horaires: [
                 HoraireOuvertureItem(jour: .lundi, horaire: "11h30 - 22h30"),
                 HoraireOuvertureItem(jour: .mardi, horaire: "11h30 - 22h30"),
@@ -151,29 +132,27 @@ var restaurants: [Restaurant] = [
         isLiked: true
     ),
 
-    // 4. Restaurant Healthy
+    // 4. We Are Ara
     Restaurant(
         nom: "We Are Ara",
-        desc:
-            "Brunch et lunch sain coloré, dans un cadre moderne rue de la Clef.",
+        desc: "Brunch et lunch sain coloré, dans un cadre moderne rue de la Clef.",
         note: 4.4,
         menu: [
             Plat(
                 nomPlat: "Avocado Toast",
                 descriptionPlat: "Pain complet, avocat, grenade, oeuf poché.",
-                imagePlat: "wearearaplat"
+                imagePlat: "wearearaplat",
+                prix: 13.50
             ),
             Plat(
                 nomPlat: "Pancakes Banane",
                 descriptionPlat: "Sirop d'érable et fruits frais.",
-                imagePlat: "pancakes_banane"
+                imagePlat: "pancakes_banane",
+                prix: 11.00
             ),
         ],
         horaireOuverture: OuvertureResto(
-            jours: [
-                .lundi, .mardi, .mercredi, .jeudi, .vendredi, .samedi,
-                .dimanche,
-            ],
+            jours: [.lundi, .mardi, .mercredi, .jeudi, .vendredi, .samedi, .dimanche],
             horaires: [
                 HoraireOuvertureItem(jour: .lundi, horaire: "09h00 - 18h00"),
                 HoraireOuvertureItem(jour: .mardi, horaire: "09h00 - 18h00"),
@@ -195,43 +174,32 @@ var restaurants: [Restaurant] = [
         longitude: 3.06500
     ),
 
-    // 5. Poisson
+    // 5. L'Ecume des Mers
     Restaurant(
         nom: "L'Ecume des Mers",
-        desc:
-            "Institution lilloise pour les plateaux de fruits de mer et poissons sauvages.",
+        desc: "Institution lilloise pour les plateaux de fruits de mer et poissons sauvages.",
         note: 4.6,
         menu: [
             Plat(
                 nomPlat: "Saint-Jacques snackées",
                 descriptionPlat: "Fondue de poireaux et beurre blanc.",
-                imagePlat: "lecumedesmersplat"
+                imagePlat: "lecumedesmersplat",
+                prix: 24.00
             ),
             Plat(
                 nomPlat: "Plateau Royal",
                 descriptionPlat: "Homard, huîtres, langoustines, bulots.",
-                imagePlat: "plateau_royal"
+                imagePlat: "plateau_royal",
+                prix: 45.00
             ),
         ],
         horaireOuverture: OuvertureResto(
             jours: [.mercredi, .jeudi, .vendredi, .samedi, .dimanche],
             horaires: [
-                HoraireOuvertureItem(
-                    jour: .mercredi,
-                    horaire: "12h00 - 14h30, 19h00 - 22h00"
-                ),
-                HoraireOuvertureItem(
-                    jour: .jeudi,
-                    horaire: "12h00 - 14h30, 19h00 - 22h00"
-                ),
-                HoraireOuvertureItem(
-                    jour: .vendredi,
-                    horaire: "12h00 - 14h30, 19h00 - 22h30"
-                ),
-                HoraireOuvertureItem(
-                    jour: .samedi,
-                    horaire: "12h00 - 14h30, 19h00 - 22h30"
-                ),
+                HoraireOuvertureItem(jour: .mercredi, horaire: "12h00 - 14h30, 19h00 - 22h00"),
+                HoraireOuvertureItem(jour: .jeudi, horaire: "12h00 - 14h30, 19h00 - 22h00"),
+                HoraireOuvertureItem(jour: .vendredi, horaire: "12h00 - 14h30, 19h00 - 22h30"),
+                HoraireOuvertureItem(jour: .samedi, horaire: "12h00 - 14h30, 19h00 - 22h30"),
                 HoraireOuvertureItem(jour: .dimanche, horaire: "12h00 - 15h00"),
             ]
         ),
@@ -246,22 +214,23 @@ var restaurants: [Restaurant] = [
         longitude: 3.06151
     ),
 
-    // 6. Le Porthos – MANDATORY
+    // 6. Le Porthos
     Restaurant(
         nom: "Le Porthos",
-        desc:
-            "Brasserie traditionnelle au cœur du Vieux-Lille, ambiance conviviale et plats du terroir.",
+        desc: "Brasserie traditionnelle au cœur du Vieux-Lille, ambiance conviviale et plats du terroir.",
         note: 4.2,
         menu: [
             Plat(
                 nomPlat: "Potjevleesch",
                 descriptionPlat: "Les 4 viandes en gelée, frites fraîches.",
-                imagePlat: "leporthosplat"
+                imagePlat: "leporthosplat",
+                prix: 16.50
             ),
             Plat(
                 nomPlat: "Andouillette d'Arras",
                 descriptionPlat: "Grillée, sauce moutarde à l'ancienne.",
-                imagePlat: "andouillette"
+                imagePlat: "andouillette",
+                prix: 15.00
             ),
         ],
         horaireOuverture: OuvertureResto(
@@ -285,43 +254,32 @@ var restaurants: [Restaurant] = [
         isLiked: true
     ),
 
-    // 7. Estaminet
+    // 7. Au Vieux de la Vieille
     Restaurant(
         nom: "Au Vieux de la Vieille",
-        desc:
-            "L'estaminet incontournable pour manger un Welsh ou une Carbonade.",
+        desc: "L'estaminet incontournable pour manger un Welsh ou une Carbonade.",
         note: 4.7,
         menu: [
             Plat(
                 nomPlat: "Welsh Complet",
                 descriptionPlat: "Cheddar, pain, jambon, oeuf, bière.",
-                imagePlat: "auvieuxdelavieilleplat"
+                imagePlat: "auvieuxdelavieilleplat",
+                prix: 16.90
             ),
             Plat(
                 nomPlat: "Mousse au Spéculoos",
                 descriptionPlat: "Dessert léger et typique du Nord.",
-                imagePlat: "mousse_speculoos"
+                imagePlat: "mousse_speculoos",
+                prix: 6.50
             ),
         ],
         horaireOuverture: OuvertureResto(
             jours: [.mardi, .mercredi, .jeudi, .vendredi, .samedi, .dimanche],
             horaires: [
-                HoraireOuvertureItem(
-                    jour: .mardi,
-                    horaire: "12h00 - 14h00, 19h00 - 22h00"
-                ),
-                HoraireOuvertureItem(
-                    jour: .mercredi,
-                    horaire: "12h00 - 14h00, 19h00 - 22h00"
-                ),
-                HoraireOuvertureItem(
-                    jour: .jeudi,
-                    horaire: "12h00 - 14h00, 19h00 - 22h00"
-                ),
-                HoraireOuvertureItem(
-                    jour: .vendredi,
-                    horaire: "12h00 - 14h00, 19h00 - 23h00"
-                ),
+                HoraireOuvertureItem(jour: .mardi, horaire: "12h00 - 14h00, 19h00 - 22h00"),
+                HoraireOuvertureItem(jour: .mercredi, horaire: "12h00 - 14h00, 19h00 - 22h00"),
+                HoraireOuvertureItem(jour: .jeudi, horaire: "12h00 - 14h00, 19h00 - 22h00"),
+                HoraireOuvertureItem(jour: .vendredi, horaire: "12h00 - 14h00, 19h00 - 23h00"),
                 HoraireOuvertureItem(jour: .samedi, horaire: "12h00 - 23h00"),
                 HoraireOuvertureItem(jour: .dimanche, horaire: "12h00 - 22h00"),
             ]
@@ -337,7 +295,7 @@ var restaurants: [Restaurant] = [
         longitude: 3.06136
     ),
 
-    // 8. Végétarien / Bio
+    // 8. Itsy Bitsy
     Restaurant(
         nom: "Itsy Bitsy",
         desc: "Cantine végétale créative et gourmande, 100% fait maison.",
@@ -346,12 +304,14 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Lasagnes Végétales",
                 descriptionPlat: "Légumes de saison rôtis, béchamel cajou.",
-                imagePlat: "itsybitsyplat"
+                imagePlat: "itsybitsyplat",
+                prix: 14.50
             ),
             Plat(
                 nomPlat: "Carrot Cake",
                 descriptionPlat: "Moelleux avec glaçage citronné.",
-                imagePlat: "carrot_cake"
+                imagePlat: "carrot_cake",
+                prix: 5.50
             ),
         ],
         horaireOuverture: OuvertureResto(
@@ -360,14 +320,8 @@ var restaurants: [Restaurant] = [
                 HoraireOuvertureItem(jour: .lundi, horaire: "12h00 - 14h30"),
                 HoraireOuvertureItem(jour: .mardi, horaire: "12h00 - 14h30"),
                 HoraireOuvertureItem(jour: .mercredi, horaire: "12h00 - 14h30"),
-                HoraireOuvertureItem(
-                    jour: .jeudi,
-                    horaire: "12h00 - 14h30, 19h00 - 21h30"
-                ),
-                HoraireOuvertureItem(
-                    jour: .vendredi,
-                    horaire: "12h00 - 14h30, 19h00 - 22h00"
-                ),
+                HoraireOuvertureItem(jour: .jeudi, horaire: "12h00 - 14h30, 19h00 - 21h30"),
+                HoraireOuvertureItem(jour: .vendredi, horaire: "12h00 - 14h30, 19h00 - 22h00"),
             ]
         ),
         categorie: .sain,
@@ -381,22 +335,23 @@ var restaurants: [Restaurant] = [
         longitude: 3.06298
     ),
 
-    // 9. Resto rapide / Midi
+    // 9. Honey & Pie
     Restaurant(
         nom: "Honey & Pie",
-        desc:
-            "Tartes salées, soupes et desserts maison pour une pause déjeuner rapide.",
+        desc: "Tartes salées, soupes et desserts maison pour une pause déjeuner rapide.",
         note: 4.3,
         menu: [
             Plat(
                 nomPlat: "Tarte Chèvre Épinard",
                 descriptionPlat: "Pâte brisée maison, servie avec salade.",
-                imagePlat: "honeypieplat"
+                imagePlat: "honeypieplat",
+                prix: 10.50
             ),
             Plat(
                 nomPlat: "Cheesecake",
                 descriptionPlat: "Coulis de fruits rouges.",
-                imagePlat: "dessert"
+                imagePlat: "dessert",
+                prix: 4.50
             ),
         ],
         horaireOuverture: OuvertureResto(
@@ -420,7 +375,7 @@ var restaurants: [Restaurant] = [
         longitude: 3.06720
     ),
 
-    // 10. Indien
+    // 10. Le Maharaja
     Restaurant(
         nom: "Le Maharaja",
         desc: "Un des plus anciens restaurants indiens de Lille, rue Gambetta.",
@@ -429,41 +384,25 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Poulet Tikka Massala",
                 descriptionPlat: "Sauce onctueuse aux épices douces.",
-                imagePlat: "maharajaplat"
+                imagePlat: "maharajaplat",
+                prix: 13.90
             ),
             Plat(
                 nomPlat: "Cheese Naan",
                 descriptionPlat: "La vache qui rit fondante à l'intérieur.",
-                imagePlat: "cheese_naan"
+                imagePlat: "cheese_naan",
+                prix: 3.50
             ),
         ],
         horaireOuverture: OuvertureResto(
             jours: [.mardi, .mercredi, .jeudi, .vendredi, .samedi, .dimanche],
             horaires: [
-                HoraireOuvertureItem(
-                    jour: .mardi,
-                    horaire: "12h00 - 14h30, 19h00 - 23h00"
-                ),
-                HoraireOuvertureItem(
-                    jour: .mercredi,
-                    horaire: "12h00 - 14h30, 19h00 - 23h00"
-                ),
-                HoraireOuvertureItem(
-                    jour: .jeudi,
-                    horaire: "12h00 - 14h30, 19h00 - 23h00"
-                ),
-                HoraireOuvertureItem(
-                    jour: .vendredi,
-                    horaire: "12h00 - 14h30, 19h00 - 23h30"
-                ),
-                HoraireOuvertureItem(
-                    jour: .samedi,
-                    horaire: "12h00 - 14h30, 19h00 - 23h30"
-                ),
-                HoraireOuvertureItem(
-                    jour: .dimanche,
-                    horaire: "12h00 - 14h30, 19h00 - 23h00"
-                ),
+                HoraireOuvertureItem(jour: .mardi, horaire: "12h00 - 14h30, 19h00 - 23h00"),
+                HoraireOuvertureItem(jour: .mercredi, horaire: "12h00 - 14h30, 19h00 - 23h00"),
+                HoraireOuvertureItem(jour: .jeudi, horaire: "12h00 - 14h30, 19h00 - 23h00"),
+                HoraireOuvertureItem(jour: .vendredi, horaire: "12h00 - 14h30, 19h00 - 23h30"),
+                HoraireOuvertureItem(jour: .samedi, horaire: "12h00 - 14h30, 19h00 - 23h30"),
+                HoraireOuvertureItem(jour: .dimanche, horaire: "12h00 - 14h30, 19h00 - 23h00"),
             ]
         ),
         categorie: .buffet,
@@ -477,47 +416,33 @@ var restaurants: [Restaurant] = [
         longitude: 3.05952
     ),
 
-    // 11. Libanais
+    // 11. Layalina
     Restaurant(
         nom: "Layalina",
-        desc:
-            "Cuisine libanaise raffinée, idéale pour partager des mezzés entre amis.",
+        desc: "Cuisine libanaise raffinée, idéale pour partager des mezzés entre amis.",
         note: 4.7,
         menu: [
             Plat(
                 nomPlat: "Assiette Découverte",
                 descriptionPlat: "Houmous, moutabal, taboulé, kebbeh.",
-                imagePlat: "layalinaplat"
+                imagePlat: "layalinaplat",
+                prix: 18.00
             ),
             Plat(
                 nomPlat: "Chiche Taouk",
                 descriptionPlat: "Brochettes de poulet marinées au citron.",
-                imagePlat: "chiche_taouk"
+                imagePlat: "chiche_taouk",
+                prix: 15.50
             ),
         ],
         horaireOuverture: OuvertureResto(
             jours: [.lundi, .mardi, .mercredi, .jeudi, .vendredi, .samedi],
             horaires: [
-                HoraireOuvertureItem(
-                    jour: .lundi,
-                    horaire: "12h00 - 14h30, 19h00 - 22h30"
-                ),
-                HoraireOuvertureItem(
-                    jour: .mardi,
-                    horaire: "12h00 - 14h30, 19h00 - 22h30"
-                ),
-                HoraireOuvertureItem(
-                    jour: .mercredi,
-                    horaire: "12h00 - 14h30, 19h00 - 22h30"
-                ),
-                HoraireOuvertureItem(
-                    jour: .jeudi,
-                    horaire: "12h00 - 14h30, 19h00 - 22h30"
-                ),
-                HoraireOuvertureItem(
-                    jour: .vendredi,
-                    horaire: "12h00 - 14h30, 19h00 - 23h00"
-                ),
+                HoraireOuvertureItem(jour: .lundi, horaire: "12h00 - 14h30, 19h00 - 22h30"),
+                HoraireOuvertureItem(jour: .mardi, horaire: "12h00 - 14h30, 19h00 - 22h30"),
+                HoraireOuvertureItem(jour: .mercredi, horaire: "12h00 - 14h30, 19h00 - 22h30"),
+                HoraireOuvertureItem(jour: .jeudi, horaire: "12h00 - 14h30, 19h00 - 22h30"),
+                HoraireOuvertureItem(jour: .vendredi, horaire: "12h00 - 14h30, 19h00 - 23h00"),
                 HoraireOuvertureItem(jour: .samedi, horaire: "12h00 - 23h00"),
             ]
         ),
@@ -532,44 +457,32 @@ var restaurants: [Restaurant] = [
         longitude: 3.06100
     ),
 
-    // 12. Burger Gourmet
+    // 12. Les Francs Burgers
     Restaurant(
         nom: "Les Francs Burgers",
-        desc:
-            "Burgers avec des produits locaux du Nord et des fromages de région.",
+        desc: "Burgers avec des produits locaux du Nord et des fromages de région.",
         note: 4.6,
         menu: [
             Plat(
                 nomPlat: "Le Maroilles",
-                descriptionPlat:
-                    "Steak Charolais, crème de Maroilles, oignons confits.",
-                imagePlat: "lesfrancsburgerplat"
+                descriptionPlat: "Steak Charolais, crème de Maroilles, oignons confits.",
+                imagePlat: "lesfrancsburgerplat",
+                prix: 15.90
             ),
             Plat(
                 nomPlat: "Frites au gras de boeuf",
                 descriptionPlat: "Croustillantes et dorées à souhait.",
-                imagePlat: "frites_gras_boeuf"
+                imagePlat: "frites_gras_boeuf",
+                prix: 4.00
             ),
         ],
         horaireOuverture: OuvertureResto(
             jours: [.mardi, .mercredi, .jeudi, .vendredi, .samedi],
             horaires: [
-                HoraireOuvertureItem(
-                    jour: .mardi,
-                    horaire: "12h00 - 14h00, 19h00 - 22h00"
-                ),
-                HoraireOuvertureItem(
-                    jour: .mercredi,
-                    horaire: "12h00 - 14h00, 19h00 - 22h00"
-                ),
-                HoraireOuvertureItem(
-                    jour: .jeudi,
-                    horaire: "12h00 - 14h00, 19h00 - 22h00"
-                ),
-                HoraireOuvertureItem(
-                    jour: .vendredi,
-                    horaire: "12h00 - 14h00, 19h00 - 22h30"
-                ),
+                HoraireOuvertureItem(jour: .mardi, horaire: "12h00 - 14h00, 19h00 - 22h00"),
+                HoraireOuvertureItem(jour: .mercredi, horaire: "12h00 - 14h00, 19h00 - 22h00"),
+                HoraireOuvertureItem(jour: .jeudi, horaire: "12h00 - 14h00, 19h00 - 22h00"),
+                HoraireOuvertureItem(jour: .vendredi, horaire: "12h00 - 14h00, 19h00 - 22h30"),
                 HoraireOuvertureItem(jour: .samedi, horaire: "12h00 - 22h30"),
             ]
         ),
@@ -584,43 +497,32 @@ var restaurants: [Restaurant] = [
         longitude: 3.06342
     ),
 
-    // 13. Marocain
+    // 13. La Mamounia
     Restaurant(
         nom: "La Mamounia",
-        desc:
-            "Le voyage des sens près de la gare Lille Flandres. Couscous royal incontournable.",
+        desc: "Le voyage des sens près de la gare Lille Flandres. Couscous royal incontournable.",
         note: 4.5,
         menu: [
             Plat(
                 nomPlat: "Tajine Agneau Pruneaux",
                 descriptionPlat: "Sucré-salé avec amandes grillées.",
-                imagePlat: "mamouniaplat"
+                imagePlat: "mamouniaplat",
+                prix: 17.50
             ),
             Plat(
                 nomPlat: "Thé à la menthe",
                 descriptionPlat: "Servi traditionnellement.",
-                imagePlat: "the_menthe"
+                imagePlat: "the_menthe",
+                prix: 2.50
             ),
         ],
         horaireOuverture: OuvertureResto(
             jours: [.mercredi, .jeudi, .vendredi, .samedi, .dimanche],
             horaires: [
-                HoraireOuvertureItem(
-                    jour: .mercredi,
-                    horaire: "12h00 - 14h30, 19h00 - 22h30"
-                ),
-                HoraireOuvertureItem(
-                    jour: .jeudi,
-                    horaire: "12h00 - 14h30, 19h00 - 22h30"
-                ),
-                HoraireOuvertureItem(
-                    jour: .vendredi,
-                    horaire: "12h00 - 14h30, 19h00 - 23h00"
-                ),
-                HoraireOuvertureItem(
-                    jour: .samedi,
-                    horaire: "12h00 - 14h30, 19h00 - 23h00"
-                ),
+                HoraireOuvertureItem(jour: .mercredi, horaire: "12h00 - 14h30, 19h00 - 22h30"),
+                HoraireOuvertureItem(jour: .jeudi, horaire: "12h00 - 14h30, 19h00 - 22h30"),
+                HoraireOuvertureItem(jour: .vendredi, horaire: "12h00 - 14h30, 19h00 - 23h00"),
+                HoraireOuvertureItem(jour: .samedi, horaire: "12h00 - 14h30, 19h00 - 23h00"),
                 HoraireOuvertureItem(jour: .dimanche, horaire: "12h00 - 15h00"),
             ]
         ),
@@ -635,29 +537,27 @@ var restaurants: [Restaurant] = [
         longitude: 3.06940
     ),
 
-    // 14. Turc / Grill
+    // 14. Efes
     Restaurant(
         nom: "Efes",
-        desc:
-            "Restaurant turc authentique, spécialité de grillades au feu de bois.",
+        desc: "Restaurant turc authentique, spécialité de grillades au feu de bois.",
         note: 4.4,
         menu: [
             Plat(
                 nomPlat: "Assiette Mixte",
                 descriptionPlat: "Adana, côtelette, poulet, boulgour.",
-                imagePlat: "efesplat"
+                imagePlat: "efesplat",
+                prix: 19.50
             ),
             Plat(
                 nomPlat: "Kunefe",
                 descriptionPlat: "Dessert chaud au fromage et cheveux d'ange.",
-                imagePlat: "kunefe"
+                imagePlat: "kunefe",
+                prix: 8.00
             ),
         ],
         horaireOuverture: OuvertureResto(
-            jours: [
-                .lundi, .mardi, .mercredi, .jeudi, .vendredi, .samedi,
-                .dimanche,
-            ],
+            jours: [.lundi, .mardi, .mercredi, .jeudi, .vendredi, .samedi, .dimanche],
             horaires: [
                 HoraireOuvertureItem(jour: .lundi, horaire: "11h30 - 23h00"),
                 HoraireOuvertureItem(jour: .mardi, horaire: "11h30 - 23h00"),
@@ -679,7 +579,7 @@ var restaurants: [Restaurant] = [
         longitude: 3.05400
     ),
 
-    // 15. Thaï / Fusion
+    // 15. Meet People
     Restaurant(
         nom: "Meet People",
         desc: "Fusion asiatique et ambiance tamisée rue de Gand.",
@@ -688,12 +588,14 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Pad Thaï Crevettes",
                 descriptionPlat: "Nouilles de riz sautées, cacahuètes.",
-                imagePlat: "meetpeopleplat"
+                imagePlat: "meetpeopleplat",
+                prix: 14.90
             ),
             Plat(
                 nomPlat: "Tigre qui pleure",
                 descriptionPlat: "Boeuf mariné et sauce épicée.",
-                imagePlat: "tigre_qui_pleure"
+                imagePlat: "tigre_qui_pleure",
+                prix: 19.00
             ),
         ],
         horaireOuverture: OuvertureResto(
@@ -722,55 +624,61 @@ let plats: [Plat] = [
     Plat(
         nomPlat: "Risotto aux Champignons",
         descriptionPlat: "Crémeux, parmesan affiné et champignons poêlés.",
-        imagePlat: "risotto"
+        imagePlat: "risotto",
+        prix: 16.50
     ),
     Plat(
         nomPlat: "Poulet Teriyaki",
-        descriptionPlat:
-            "Poulet caramélisé avec sauce soja sucrée et graines de sésame.",
-        imagePlat: "teriyaki"
+        descriptionPlat: "Poulet caramélisé avec sauce soja sucrée et graines de sésame.",
+        imagePlat: "teriyaki",
+        prix: 14.90
     ),
     Plat(
         nomPlat: "Curry Vert Thaï",
-        descriptionPlat:
-            "Lait de coco, légumes croquants et épices thaïlandaises.",
-        imagePlat: "curry_vert"
+        descriptionPlat: "Lait de coco, légumes croquants et épices thaïlandaises.",
+        imagePlat: "curry_vert",
+        prix: 15.50
     ),
     Plat(
         nomPlat: "Fish & Chips",
-        descriptionPlat:
-            "Poisson frais frit avec frites maison et sauce tartare.",
-        imagePlat: "fish_chips"
+        descriptionPlat: "Poisson frais frit avec frites maison et sauce tartare.",
+        imagePlat: "fish_chips",
+        prix: 17.00
     ),
     Plat(
         nomPlat: "Gnocchis à la Crème",
         descriptionPlat: "Gnocchis grillés et sauce à la crème fraîche.",
-        imagePlat: "gnocchis"
+        imagePlat: "gnocchis",
+        prix: 13.50
     ),
     Plat(
         nomPlat: "Falafels Maison",
-        descriptionPlat:
-            "Boules de pois chiches croustillantes et sauce tahini.",
-        imagePlat: "falafels"
+        descriptionPlat: "Boules de pois chiches croustillantes et sauce tahini.",
+        imagePlat: "falafels",
+        prix: 11.00
     ),
     Plat(
         nomPlat: "Bœuf Bourguignon",
         descriptionPlat: "Plat mijoté au vin rouge, carottes et lardons.",
-        imagePlat: "bourguignon"
+        imagePlat: "bourguignon",
+        prix: 18.90
     ),
     Plat(
         nomPlat: "Pad Kra Pao",
         descriptionPlat: "Bœuf sauté au basilic thaï et riz jasmin.",
-        imagePlat: "pad_kra_pao"
+        imagePlat: "pad_kra_pao",
+        prix: 16.00
     ),
     Plat(
         nomPlat: "Pizza 4 Fromages",
         descriptionPlat: "Mozzarella, gorgonzola, chèvre et parmesan.",
-        imagePlat: "pizza_4_fromages"
+        imagePlat: "pizza_4_fromages",
+        prix: 14.50
     ),
     Plat(
         nomPlat: "Saumon Gravlax",
         descriptionPlat: "Mariné à l’aneth, citron et baies roses.",
-        imagePlat: "gravlax"
+        imagePlat: "gravlax",
+        prix: 19.00
     ),
 ]

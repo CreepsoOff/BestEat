@@ -132,7 +132,7 @@ struct RechercheVue: View {
                                         
                                         ForEach(restosSains) { restaurant in
                                             NavigationLink {
-                                                RestaurantDetails(restaurant: restaurant)
+                                                RestaurantInfoDetails(restaurant: restaurant)
                                             } label: {
                                                 RestaurantCard(restaurant: restaurant)
                                                     .padding(.horizontal)
@@ -157,7 +157,7 @@ struct RechercheVue: View {
                             
                             ForEach(resultatFiltres) { restaurant in
                                 NavigationLink {
-                                    RestaurantDetails(restaurant: restaurant)
+                                    RestaurantInfoDetails(restaurant: restaurant)
                                 } label: {
                                     RestaurantCard(restaurant: restaurant)
                                         .foregroundStyle(.black)
