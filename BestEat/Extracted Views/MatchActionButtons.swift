@@ -37,6 +37,7 @@ struct MatchActionButtons: View {
             .buttonStyle(.glassProminent)
             .tint(.midGreen)
         }
+        .padding(.top, 10)
     }
 }
 

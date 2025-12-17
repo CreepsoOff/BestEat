@@ -24,7 +24,6 @@ struct CarteVue: View {
     )
     
     var body: some View {
-        // 1. On ajoute NavigationStack pour que la toolbar et le lien fonctionnent
         NavigationStack {
             ZStack(alignment: .topTrailing) {
                 
@@ -51,7 +50,7 @@ struct CarteVue: View {
             }
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("Carte") // Vous pouvez changer par "Carte" si vous préférez
+                    Text("Carte")
                         .font(.custom("Redaction-Regular", size: 32))
                         .foregroundStyle(.brownText)
                         .padding(.top, 10)

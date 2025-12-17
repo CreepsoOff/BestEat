@@ -11,7 +11,7 @@ import SwiftUI
 struct OnBoarding: View {
     // --- ÉTATS DE SÉLECTION ---
     @State private var selectedEmotion: Emotion = .joie
-    @State private var selectedViande: Viande = .poisson
+    @State private var selectedViande: Viande = .boeuf
     @State private var selectedDeplacement: ModeDeplacement = .pieds
     @State private var selectedRegime: RegimeAlimentaire = .halal
     @State private var selectedBudget: Budget = .moyen
@@ -32,32 +32,97 @@ struct OnBoarding: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                Color("Background").ignoresSafeArea()
-                ScrollView(showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: 30) {
+            ZStack(alignment: .top) {
+                Color("BackgroundCream").ignoresSafeArea()
+                
+                // Si la carte n'est pas en plein écran, on affiche le contenu
+                if !showFullMap {
+                    ScrollView(showsIndicators: false) {
+                        VStack(alignment: .leading, spacing: 30) {
 
-                        interactiveSentenceView
+                            interactiveSentenceView
+                                .padding(.top, 20)
 
-                        Map(position: $position)
-                            .frame(height: 300)
-                            .clipShape(RoundedRectangle(cornerRadius: 30))
-                            .matchedGeometryEffect(id: "map", in: mapNamespace)
-                            .onTapGesture {
-                                withAnimation(.easeInOut(duration: 0.35)) {
-                                    showFullMap = true
+                            
+                            // --- SUGGESTIONS ---
+                            HStack {
+                                Spacer()
+                                NavigationLink {
+                                    SuggestionsVue(
+                                        viande: selectedViande,
+                                        regime: selectedRegime
+                                    )
+                                } label: {
+                                    HStack {
+                                        Text("Accéder à mes suggestions")
+                                            .font(.custom("Redaction-Bold", size: 18))
+                                        Image(systemName: "arrow.right")
+                                            .bold()
+                                    }
+                                    .foregroundColor(.white)
+                                    .padding(.vertical, 16)
+                                    .padding(.horizontal, 24)
+                                    .background(Color("BrownText")) // Couleur principale
+                                    .clipShape(Capsule())
+                                    .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
                                 }
+                                Spacer()
                             }
-                            .padding(.horizontal)
-                        Spacer()
+                            
+                            // --- CARTE MINIATURE ---
+                            Map(position: $position)
+                                .frame(height: 300)
+                                .clipShape(RoundedRectangle(cornerRadius: 30))
+                                .matchedGeometryEffect(id: "map", in: mapNamespace)
+                                .onTapGesture {
+                                    withAnimation(.easeInOut(duration: 0.35)) {
+                                        showFullMap = true
+                                    }
+                                }
+                                .padding(.horizontal)
+                            
+                        }
                     }
                 }
+                
                 if showFullMap {
                     CarteVue(
                         namespace: mapNamespace,
                         showFullMap: $showFullMap
                     )
                     .zIndex(1)
+                }
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text(showFullMap ? "Carte" : "Mes envies")
+                        .font(.custom("Redaction-Regular", size: 32))
+                        .padding(.top, 10)
+                        .foregroundStyle(.brownText)
+                        .contentTransition(.numericText())
+                        .animation(.bouncy, value: showFullMap)
+                }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    if showFullMap {
+                        Button {
+                            withAnimation(.easeInOut(duration: 0.35)) {
+                                showFullMap = false
+                            }
+                        } label: {
+                            Image(systemName: "xmark")
+                                .bold()
+                                .foregroundStyle(.brownText)
+                        }
+                    } else {
+                        NavigationLink {
+                            MonProfilVue()
+                        } label: {
+                            Image(systemName: "person.fill")
+                                .foregroundStyle(.brownText)
+                        }
+                    }
                 }
             }
         }
@@ -123,48 +188,9 @@ struct OnBoarding: View {
 
         }
         .padding(.horizontal)
-        
-        .onDisappear {
-            showFullMap = false
-        }
-        
-        .toolbar {
-            ToolbarItem(placement: .principal) {
-                Text(showFullMap ? "Carte" : "Suggestions")
-                    .font(.custom("Redaction-Regular", size: 32))
-                    .padding(.top, 10)
-                    .foregroundStyle(.brownText)
-                    .contentTransition(.numericText())
-                    .animation(.bouncy, value: showFullMap)
-
-            }
-            
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                
-                if showFullMap {
-                    Button {
-                        withAnimation(.easeInOut(duration: 0.35)) {
-                            showFullMap = false
-                        }
-                    } label: {
-                        Image(systemName: "xmark")
-                            .bold()
-                            .foregroundStyle(.brownText)
-                    }
-
-                }else{
-                    
-                    NavigationLink {
-                        MonProfilVue()
-                    } label: {
-                        Image(systemName: "person.fill")
-                            .foregroundStyle(.brownText)
-                    }
-                }
-            }
-        }
     }
+
+    // --- FONCTIONS TEXTE ---
 
     private func emotionLine() -> Text {
         Text(
@@ -239,12 +265,7 @@ struct OnBoarding: View {
             """
         )
     }
-    
-
-
 }
-
-
 
 #Preview {
     OnBoarding()

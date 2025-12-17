@@ -9,9 +9,11 @@ import SwiftUI
 
 struct RestaurantMatch: View {
     let restaurant: Restaurant
-    var onRemove: (Bool) -> Void
     
-    @State private var offset = CGSize.zero
+    // Cela sert uniquement à afficher les tampons Like/Pass sur la carte
+    var offset: CGSize = .zero
+    
+    var onRemove: ((Bool) -> Void)? = nil
     
     var body: some View {
         ZStack(alignment: .bottomLeading) {
@@ -65,8 +67,7 @@ struct RestaurantMatch: View {
             }
             .padding(24).padding(.bottom, 10)
             
-            // Feedback DRAG MANUEL (Swipe doigt)
-            // Cela s'affiche uniquement quand on tire la carte avec le doigt
+            // Feedback VISUEL sur la carte (Tampons)
             if offset.width > 50 {
                 visuelLike.opacity(Double(offset.width / 150))
             } else if offset.width < -50 {
@@ -76,26 +77,6 @@ struct RestaurantMatch: View {
         .background(Color.white)
         .cornerRadius(32)
         .shadow(color: .black.opacity(0.2), radius: 20, x: 0, y: 10)
-        
-        // Logique Geste Doigt
-        .rotationEffect(.degrees(Double(offset.width / 20)))
-        .offset(x: offset.width, y: offset.height * 0.4)
-        .opacity(2 - Double(abs(offset.width) / 150))
-        .gesture(
-            DragGesture()
-                .onChanged { gesture in
-                    offset = gesture.translation
-                }
-                .onEnded { _ in
-                    if offset.width > 150 {
-                        onRemove(true)
-                    } else if offset.width < -150 {
-                        onRemove(false)
-                    } else {
-                        withAnimation(.spring()) { offset = .zero }
-                    }
-                }
-        )
     }
     
     private var visuelLike: some View {
@@ -113,4 +94,10 @@ struct RestaurantMatch: View {
             .opacity(0.8)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
+}
+
+#Preview {
+    RestaurantMatch(restaurant: restaurants[0])
+        .padding()
+        .background(Color.gray)
 }

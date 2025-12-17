@@ -1,141 +1,250 @@
+//
+//  MonProfilVue.swift
+//  BestEat
+//
+//  Created by apprenant98 on 11/12/2025.
+//
+
 import SwiftUI
 
 struct MonProfilVue: View {
     
-    @State private var halal = true
-    @State private var vegetarien = true
-    @State private var cacher = false
-    @State private var vegan = true
-    
-    @State private var emotionChoisi: String? = nil
-    
-    let emotions = ["😂", "😄", "🙂", "😭", "😢", "😡"]
-    
-    
-    let accentColor = Color(red: 0.65, green: 0.45, blue: 0.15)
-    let backgroundColor = Color(red: 0.98, green: 0.96, blue: 0.92)
+    @State private var profil = Profil(
+        nom: "Gourmet",
+        budget: .moyen,
+        regime: [.halal, .vegetarien],
+        emotion: [.joie]
+    )
     
     var body: some View {
         NavigationStack {
-            
-            ScrollView {
+            ZStack {
+                Color("BackgroundCream").ignoresSafeArea()
                 
-                VStack(spacing: 30) {
-                    
-                    Text("Mon profil")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(accentColor)
-                        .padding(.top, 20)
-                    
-                    VStack(alignment: .leading, spacing: 15) {
-                        Text("Prix 😊")
-                            .font(.headline)
-                            .foregroundColor(accentColor)
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 30) {
                         
-                        HStack {
-                            VStack {
-                                Text("MINIMUM")
-                                    .font(.caption)
-                                Text("20€")
-                                    .font(.title3)
-                                    .fontWeight(.medium)
-                            }
-                            .padding(15)
-                            .frame(maxWidth: .infinity)
-                            .background(
-                                RoundedRectangle(cornerRadius: 15)
-                                    .fill(Color.white)
-                                    .shadow(color: .gray.opacity(0.3), radius: 3, x: 0, y: 2)
-                            )
-                            
-                            Spacer()
-                                .frame(width: 20)
-                            
-                            VStack {
-                                Text("MAXIMUM")
-                                    .font(.caption)
-                                Text("200€")
-                                    .font(.title3)
-                                    .fontWeight(.medium)
-                            }
-                            .padding(15)
-                            .frame(maxWidth: .infinity)
-                            .background(
-                                RoundedRectangle(cornerRadius: 15)
-                                    .fill(Color.white)
-                                    .shadow(color: .gray.opacity(0.3), radius: 3, x: 0, y: 2)
-                            )
-                        }
-                    }
-                    .padding(.horizontal)
-                    
-                    
-                    VStack(alignment: .leading, spacing: 15) {
-                        Text("Régime 😊")
-                            .font(.headline)
-                            .foregroundColor(accentColor)
-                        
+                        // --- EN-TÊTE ---
                         VStack(spacing: 10) {
-                            Toggle("Halal", isOn: $halal)
-                            Toggle("Végétarien", isOn: $vegetarien)
-                            Toggle("Cacher", isOn: $cacher)
-                            Toggle("Végétalien", isOn: $vegan)
+                            Image(systemName: "person.circle.fill")
+                                .resizable()
+                                .frame(width: 80, height: 80)
+                                .foregroundStyle(Color("BrownText"))
+                                .background(Color.white)
+                                .clipShape(Circle())
+                                .shadow(color: .black.opacity(0.1), radius: 5)
+                            
+                            Text("Mon profil")
+                                .font(.custom("Redaction-Bold", size: 34))
+                                .foregroundStyle(Color("BrownText"))
                         }
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 15)
-                                .fill(Color.white)
-                                .shadow(color: .gray.opacity(0.3), radius: 3, x: 0, y: 2)
-                        )
-                    }
-                    .padding(.horizontal)
-                    
-                    
-                    VStack(alignment: .leading, spacing: 15) {
-                        Text("Émotion:")
-                            .font(.headline)
-                            .foregroundColor(accentColor)
+                        .padding(.top, 20)
                         
-                        LazyVGrid(columns: [
-                            GridItem(.flexible()),
-                            GridItem(.flexible()),
-                            GridItem(.flexible())
-                        ], spacing: 30) {
-                            ForEach(["😂", "😄", "🙂", "😭", "😢", "😡"], id: \.self) { emoji in
-                                Button(action: {
-                                    emotionChoisi = emoji
-                                }) {
-                                    Text(emoji)
-                                        .font(.system(size: 50))
-                                        .scaleEffect(emotionChoisi == emoji ? 1.3 : 1.0)
-                                        .animation(.spring(response: 0.3), value: emotionChoisi)
+                        // --- SECTION BUDGET ---
+                        VStack(alignment: .leading, spacing: 15) {
+                            sectionTitle("Budget")
+                            
+                            HStack(spacing: 8) {
+                                ForEach(Budget.allCases, id: \.self) { budget in
+                                    BudgetCard(
+                                        budget: budget,
+                                        isSelected: profil.budget == budget,
+                                        action: { withAnimation { profil.budget = budget } }
+                                    )
                                 }
                             }
                         }
-                    }
-                    .padding(.horizontal)
-                    
-                    
-                    NavigationLink {
-                        RestaurantsVisitesVue()
-                    } label: {
-                        Circle()
-                            .fill(accentColor) // Couleur marron/bronze
-                            .frame(width: 60, height: 60)
-                            .overlay(
-                                Image(systemName: "book.fill")
-                                    .foregroundColor(.white)
-                                    .font(.title2)
+                        .padding(.horizontal)
+                        
+                        // --- SECTION RÉGIME ---
+                        VStack(alignment: .leading, spacing: 15) {
+                            sectionTitle("Régime")
+                            
+                            VStack(spacing: 12) {
+                                ForEach(RegimeAlimentaire.allCases, id: \.self) { regime in
+                                    ToggleRow(
+                                        title: regime.rawValue.capitalized,
+                                        isSelected: profil.regime.contains(regime)
+                                    ) {
+                                        toggleRegime(regime)
+                                    }
+                                }
+                            }
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(Color.white)
+                                    .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 2)
                             )
+                        }
+                        .padding(.horizontal)
+                        
+                        // --- SECTION ÉMOTION ---
+                        VStack(alignment: .leading, spacing: 15) {
+                            sectionTitle("Humeur actuelle")
+                            
+                            // Grille adaptative pour les émojis
+                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 60))], spacing: 20) {
+                                ForEach(Emotion.allCases) { emotion in
+                                    EmotionButton(
+                                        emotion: emotion,
+                                        isSelected: profil.emotion.contains(emotion)
+                                    ) {
+                                        toggleEmotion(emotion)
+                                    }
+                                }
+                            }
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 20)
+                                    .fill(Color.white)
+                                    .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 2)
+                            )
+                        }
+                        .padding(.horizontal)
+                        
+                        // --- LIEN VERS VISITES ---
+                        NavigationLink {
+                            RestaurantsVisitesVue()
+                        } label: {
+                            HStack {
+                                Image(systemName: "book.fill")
+                                Text("Voir mes visites")
+                                    .font(.custom("Redaction-Regular", size: 18))
+                            }
+                            .foregroundColor(.white)
+                            .padding(.vertical, 16)
+                            .padding(.horizontal, 30)
+                            .background(Color("BrownText"))
+                            .clipShape(Capsule())
+                            .shadow(radius: 5)
+                        }
+                        .padding(.vertical, 30)
                     }
-                    .padding(.bottom, 30)
                 }
             }
-            .background(backgroundColor.edgesIgnoringSafeArea(.all))
-            .navigationTitle("")
-            .toolbar(.hidden, for: .tabBar) 
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(.hidden, for: .tabBar)
         }
+    }
+    
+    // MARK: - LOGIQUE
+    
+    private func toggleRegime(_ r: RegimeAlimentaire) {
+        if let index = profil.regime.firstIndex(of: r) {
+            profil.regime.remove(at: index)
+        } else {
+            profil.regime.append(r)
+        }
+    }
+    
+    private func toggleEmotion(_ e: Emotion) {
+        if let index = profil.emotion.firstIndex(of: e) {
+            profil.emotion.remove(at: index)
+        } else {
+            profil.emotion.append(e)
+        }
+    }
+    
+    private func sectionTitle(_ text: String) -> some View {
+        Text(text)
+            .font(.custom("Redaction-Regular", size: 24))
+            .foregroundStyle(Color("BrownText"))
+    }
+}
+
+// MARK: - SOUS-VUES
+
+struct BudgetCard: View {
+    let budget: Budget
+    let isSelected: Bool
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            VStack(spacing: 4) {
+                Text(budget.rawValue)
+                    .font(.system(size: 12, weight: .bold))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .foregroundStyle(isSelected ? .white : Color("BrownText"))
+                
+                Text(symbolString)
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundStyle(isSelected ? .white : Color("DeepOrange"))
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 12)
+            .background(
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(isSelected ? Color("DeepOrange") : Color.white)
+                    .shadow(color: .black.opacity(0.1), radius: 3, x: 0, y: 2)
+            )
+        }
+    }
+    
+    var symbolString: String {
+        switch budget {
+        case .petit: return "€"
+        case .moyen: return "€€"
+        case .grand: return "€€€"
+        case .gros:  return "€€€€"
+        }
+    }
+}
+
+struct ToggleRow: View {
+    let title: String
+    let isSelected: Bool
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            HStack {
+                Text(title)
+                    .font(.body)
+                    .foregroundStyle(Color("BrownText"))
+                Spacer()
+                Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                    .font(.title2)
+                    .foregroundStyle(isSelected ? Color("LightOrange") : Color.gray.opacity(0.3))
+                    .contentTransition(.symbolEffect(.replace))
+            }
+            .contentShape(Rectangle())
+        }
+        .padding(.vertical, 4)
+    }
+}
+
+struct EmotionButton: View {
+    let emotion: Emotion
+    let isSelected: Bool
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            VStack(spacing: 5) {
+                Text(emotion.emoji)
+                    .font(.system(size: 40))
+                    .scaleEffect(isSelected ? 1.2 : 1.0)
+                    .padding(10)
+                    .background(
+                        Circle()
+                            .fill(isSelected ? Color("LightOrange").opacity(0.2) : Color.clear)
+                    )
+                    .overlay(
+                        Circle()
+                            .stroke(isSelected ? Color("LightOrange") : Color.clear, lineWidth: 2)
+                    )
+                
+                Text(emotion.rawValue)
+                    .font(.caption2)
+                    .foregroundStyle(Color("BrownText").opacity(0.7))
+                    .lineLimit(1)
+            }
+        }
+        .animation(.spring(response: 0.3), value: isSelected)
     }
 }
 

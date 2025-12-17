@@ -63,7 +63,7 @@ var restaurants: [Restaurant] = [
         tag: [.fait_maison, .cosy, .vegetalien],
         estVisite: true,
         adresse: "126 Rue Esquermoise, 59800 Lille",
-        image: "labellezza",
+        image: "lunchtime",
         latitude: 50.63897,
         longitude: 3.05880
     ),
@@ -100,7 +100,7 @@ var restaurants: [Restaurant] = [
         tag: [.cosy, .fait_maison, .halal],
         estVisite: false,
         adresse: "115 Rue de Gand, 59800 Lille",
-        image: "beefart",
+        image: "bombayspicie",
         latitude: 50.6425,
         longitude: 3.0660,
         isLiked: true
@@ -141,7 +141,7 @@ var restaurants: [Restaurant] = [
         ),
         categorie: .fastFood,
         typologie: .snack,
-        viandes: [.poulet],
+        viandes: [.poulet, .boeuf],
         tag: [.fait_maison, .halal],
         estVisite: true,
         adresse: "18 Rue d'Amiens, 59800 Lille",
@@ -190,7 +190,7 @@ var restaurants: [Restaurant] = [
         tag: [.sain, .vegetalien, .sans_gluten, .cosy],
         estVisite: false,
         adresse: "14 Rue de la Clef, 59800 Lille",
-        image: "weareara",
+        image: "lapalmeraie",
         latitude: 50.63680,
         longitude: 3.06500
     ),
@@ -241,7 +241,7 @@ var restaurants: [Restaurant] = [
         tag: [.poisson, .sain, .fait_maison],
         estVisite: false,
         adresse: "10 Rue du Pas, 59800 Lille",
-        image: "ecumedesmers",
+        image: "lecedreduliban",
         latitude: 50.63727,
         longitude: 3.06151
     ),
@@ -279,7 +279,7 @@ var restaurants: [Restaurant] = [
         tag: [.cosy, .plats_mijotes, .fait_maison],
         estVisite: true,
         adresse: "53 Rue de la Monnaie, 59800 Lille",
-        image: "porthos",
+        image: "speedburger",
         latitude: 50.64108,
         longitude: 3.06253,
         isLiked: true
@@ -332,7 +332,7 @@ var restaurants: [Restaurant] = [
         tag: [.plats_mijotes, .cosy, .fait_maison],
         estVisite: true,
         adresse: "2 Rue des Vieux Murs, 59800 Lille",
-        image: "vieuxdelavieille",
+        image: "auvieuxlille",
         latitude: 50.64089,
         longitude: 3.06136
     ),
@@ -376,7 +376,7 @@ var restaurants: [Restaurant] = [
         tag: [.sain, .vegetalien, .fait_maison, .cosy],
         estVisite: false,
         adresse: "10 Rue Jeanne Maillotte, 59800 Lille",
-        image: "itsybitsy",
+        image: "thedublincorner",
         latitude: 50.63176,
         longitude: 3.06298
     ),
@@ -415,7 +415,7 @@ var restaurants: [Restaurant] = [
         tag: [.fait_maison, .sain],
         estVisite: true,
         adresse: "15 Rue des Ponts de Comines, 59800 Lille",
-        image: "honeyandpie",
+        image: "thedublincorner",
         latitude: 50.63690,
         longitude: 3.06720
     ),
@@ -527,7 +527,7 @@ var restaurants: [Restaurant] = [
         tag: [.halal, .sain, .fait_maison, .vegetalien],
         estVisite: true,
         adresse: "34 Rue de l'Hôpital Militaire, 59800 Lille",
-        image: "layalina",
+        image: "thedublincorner",
         latitude: 50.63500,
         longitude: 3.06100
     ),
@@ -579,7 +579,7 @@ var restaurants: [Restaurant] = [
         tag: [.fait_maison, .cosy],
         estVisite: false,
         adresse: "22 Place du Général de Gaulle, 59800 Lille",
-        image: "francsburgers",
+        image: "thedublincorner",
         latitude: 50.63688,
         longitude: 3.06342
     ),
@@ -630,7 +630,7 @@ var restaurants: [Restaurant] = [
         tag: [.halal, .plats_mijotes, .cosy],
         estVisite: true,
         adresse: "12 Place de la Gare, 59000 Lille",
-        image: "mamounia",
+        image: "thedublincorner",
         latitude: 50.63660,
         longitude: 3.06940
     ),
@@ -674,7 +674,7 @@ var restaurants: [Restaurant] = [
         tag: [.halal, .fait_maison],
         estVisite: false,
         adresse: "88 Rue des Postes, 59000 Lille",
-        image: "efes",
+        image: "thedublincorner",
         latitude: 50.62600,
         longitude: 3.05400
     ),
@@ -712,7 +712,7 @@ var restaurants: [Restaurant] = [
         tag: [.cosy, .fait_maison, .sans_gluten],
         estVisite: true,
         adresse: "20 Rue de Gand, 59800 Lille",
-        image: "meetpeople",
+        image: "thedublincorner",
         latitude: 50.64185,
         longitude: 3.06573
     ),

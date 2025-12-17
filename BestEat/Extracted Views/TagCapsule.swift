@@ -16,7 +16,7 @@ struct TagCapsule: View {
             Image(systemName: tag.icon)
                 .font(.system(size: 10, weight: .bold))
 
-            
+            // Texte
             Text(tag.rawValue)
                 .font(.system(size: 12, weight: .semibold))
 

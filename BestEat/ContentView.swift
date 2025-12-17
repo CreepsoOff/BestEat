@@ -12,7 +12,7 @@ struct ContentView: View {
 
     var body: some View {
         TabView(selection: $ongletSelectionne) {
-            Tab("Suggestions", systemImage: "star.fill", value: 0) {
+            Tab("Mes envies", systemImage: "star.fill", value: 0) {
                 OnBoarding()
                 
             }

@@ -17,10 +17,10 @@ enum Jour: String {
     case dimanche = "Dimanche"
 }
 
-enum Viande: String, CaseIterable { // Ajoute CaseIterable ici pour pouvoir boucler dessus
+enum Viande: String, CaseIterable {
+    case boeuf   = "Boeuf"
     case poisson = "Poisson"
     case poulet  = "Poulet"
-    case boeuf   = "Boeuf"
     case agneau  = "Agneau"
     
     var emoji: String {
@@ -56,11 +56,21 @@ enum Budget: String {
     case gros  = "+20€"
 }
 
-struct Plat: Identifiable {
+@Observable
+class Plat: Identifiable {
     var id  = UUID()
     let nomPlat:         String
     let descriptionPlat: String
     let imagePlat: String
+    var isFavori: Bool
+    
+    init(id: UUID = UUID(), nomPlat: String, descriptionPlat: String, imagePlat: String, isFavori: Bool = false) {
+        self.id = id
+        self.nomPlat = nomPlat
+        self.descriptionPlat = descriptionPlat
+        self.imagePlat = imagePlat
+        self.isFavori = isFavori
+    }
 }
 
 struct HoraireOuvertureItem {
@@ -73,7 +83,8 @@ struct OuvertureResto {
     let horaires: [HoraireOuvertureItem]
 }
 
-struct Restaurant: Identifiable {
+@Observable
+class Restaurant: Identifiable {
     let id = UUID()
     let nom: String
     let desc: String
@@ -164,17 +175,17 @@ enum Tag: String, CaseIterable {
             }
         }
     
-    // 2. (Bonus) Définir une icône SF Symbol pour chaque Tag (comme sur ton image)
+    // 2. Définir une icône SF Symbol pour chaque Tag
     var icon: String {
         switch self {
         case .poisson:       return "fish.fill"
         case .vegetalien:    return "leaf.fill"
         case .sain:          return "carrot.fill"
         case .halal:         return "checkmark.seal.fill"
-        case .fait_maison:   return "house.fill" // ou "heart.fill"
-        case .sushi:         return "circle.grid.cross.fill" // Abstrait pour sushi
+        case .fait_maison:   return "house.fill"
+        case .sushi:         return "circle.grid.cross.fill"
         case .sans_gluten:   return "allergens.fill"
-        case .cosy:          return "sofa.fill" // ou "cup.and.saucer.fill"
+        case .cosy:          return "sofa.fill"
         case .plats_mijotes: return "flame.fill"
         }
     }
@@ -188,6 +199,7 @@ enum Emotion: String {
     case peur = "Apeuré"
     case surprise = "Surpris"
     case degout = "Dégoûté"
+    case fatigue = "Fatigué"
     
     var emoji: String {
         switch self {
@@ -197,6 +209,7 @@ enum Emotion: String {
         case .peur:      return "😨"
         case .surprise:  return "😲"
         case .degout:    return "🤢"
+        case .fatigue:   return "😴"
         }
     }
 }
@@ -226,7 +239,6 @@ struct Profil {
 }
 
 
-// Ajoutez CaseIterable et Identifiable aux énums existants pour les menus
 
 extension Emotion: CaseIterable, Identifiable {
     var id: Self { self }
@@ -244,7 +256,6 @@ extension RegimeAlimentaire: CaseIterable, Identifiable {
     var id: Self { self }
 }
 
-// Viande est déjà CaseIterable, on ajoute juste Identifiable
 extension Viande: Identifiable {
     var id: Self { self }
 }
