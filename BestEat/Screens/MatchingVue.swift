@@ -50,6 +50,17 @@ struct MatchingVue: View {
                         .foregroundStyle(Color("BrownText"))
                         .padding(.top, 10)
                 }
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink {
+                        MesMatchsVue()
+                    } label: {
+                        Image(systemName: "heart.fill")
+                            .foregroundStyle(Color("DeepOrange"))
+                    }
+                    
+                    
+                }
 
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
@@ -58,7 +69,12 @@ struct MatchingVue: View {
                         Image(systemName: "person.fill")
                             .foregroundStyle(Color("BrownText"))
                     }
+                    
+                    
                 }
+                
+
+                
             }
         }
     }

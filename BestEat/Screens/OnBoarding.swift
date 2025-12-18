@@ -50,7 +50,8 @@ struct OnBoarding: View {
                                 NavigationLink {
                                     SuggestionsVue(
                                         viande: selectedViande,
-                                        regime: selectedRegime
+                                        regime: selectedRegime,
+                                        budget: selectedBudget
                                     )
                                 } label: {
                                     HStack {
@@ -97,7 +98,7 @@ struct OnBoarding: View {
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text(showFullMap ? "Carte" : "Mes envies")
-                        .font(.custom("Redaction-Regular", size: 24))
+                        .font(.custom("Redaction-Regular", size: 32))
                         .padding(.top, 10)
                         .foregroundStyle(.brownText)
                         .contentTransition(.numericText())

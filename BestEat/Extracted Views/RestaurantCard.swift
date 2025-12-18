@@ -13,20 +13,26 @@ struct RestaurantCard: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                // Image
-                if let premierPlat = restaurant.menu.first {
-                    Image(premierPlat.imagePlat)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 97, height: 97)
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
-                } else {
-                    // Sécurité : Si le menu est vide, on garde le rectangle gris
-                    Rectangle()
-                        .fill(Color.gray.opacity(0.3))
-                        .frame(width: 97, height: 97)
-                        .cornerRadius(16)
-                }
+                /// Méthode avec image du premier plat
+//                // Image
+//                if let premierPlat = restaurant.menu.first {
+//                    Image(premierPlat.imagePlat)
+//                        .resizable()
+//                        .aspectRatio(contentMode: .fill)
+//                        .frame(width: 97, height: 97)
+//                        .clipShape(RoundedRectangle(cornerRadius: 16))
+//                } else {
+//                    // Sécurité : Si le menu est vide, on garde le rectangle gris
+//                    Rectangle()
+//                        .fill(Color.gray.opacity(0.3))
+//                        .frame(width: 97, height: 97)
+//                        .cornerRadius(16)
+//                }
+                Image(restaurant.image)
+                    .resizable()
+                    .frame(width: 97, height: 97)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 0)
                 
                 VStack(alignment: .leading, spacing: 4) {
                     

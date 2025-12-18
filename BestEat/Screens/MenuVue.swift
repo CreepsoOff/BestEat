@@ -11,6 +11,7 @@ struct MenuVue: View {
     let restaurant: Restaurant
 
     var body: some View {
+        
         ZStack {
             Color("BackgroundCream").ignoresSafeArea()
 
@@ -44,17 +45,31 @@ struct MenuVue: View {
                                     .lineLimit(4)
                                     .fixedSize(horizontal: false, vertical: true)
                                 
-                                Text("20€")
+                                Text("\(plat.prix, specifier: "%.2f") €")
                                     .font(.custom("Redaction-Regular", size: 18))
                                     .foregroundStyle(.black)
                             }
                             .padding()
                             .frame(height: 130)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            .overlay(alignment: .bottomTrailing) {
+                                Button {
+                                    plat.isFavori.toggle()
+                                } label: {
+                                    Image(systemName: plat.isFavori ? "star.fill" : "star")
+                                        .font(.system(size: 22))
+                                        .foregroundStyle(Color("DeepOrange").opacity(0.8))
+                                        .padding(15) 
+                                }
+                            }
+                            
                             .background(Color.white)
                             .cornerRadius(15)
                             .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 2)
                             .rotationEffect(.degrees(5))
+                            
+                            
                             
 
                         }

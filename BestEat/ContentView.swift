@@ -36,8 +36,6 @@ struct ContentView: View {
             
         }
         .tint(.deepOrange)
-        
-        
     }
 }
 

@@ -24,7 +24,7 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Tiramisu della Nonna",
                 descriptionPlat: "Servi à la louche, généreux et crémeux.",
-                imagePlat: "dessert",
+                imagePlat: "tiramisu",
                 prix: 8.5
             ),
         ],
@@ -45,7 +45,7 @@ var restaurants: [Restaurant] = [
         tag: [.fait_maison, .cosy, .vegetalien],
         estVisite: true,
         adresse: "126 Rue Esquermoise, 59800 Lille",
-        image: "lunchtime",
+        image: "labellezza",
         latitude: 50.63897,
         longitude: 3.05880
     ),
@@ -83,7 +83,7 @@ var restaurants: [Restaurant] = [
         tag: [.cosy, .fait_maison, .halal],
         estVisite: false,
         adresse: "115 Rue de Gand, 59800 Lille",
-        image: "bombayspicie",
+        image: "beefart",
         latitude: 50.6425,
         longitude: 3.0660,
         isLiked: true
@@ -93,19 +93,19 @@ var restaurants: [Restaurant] = [
     Restaurant(
         nom: "Raptor Shack",
         desc: "Street food de qualité, spécialisé dans le poulet frit et les sauces maison.",
-        note: 4.5,
+        note: 5.0,
         menu: [
             Plat(
                 nomPlat: "Le T-Rex",
                 descriptionPlat: "Burger double poulet frit, cheddar, bacon.",
                 imagePlat: "raptorshackplat",
-                prix: 12.90
+                prix: 4.90
             ),
             Plat(
                 nomPlat: "Loaded Fries",
                 descriptionPlat: "Frites, sauce fromagère, oignons frits.",
                 imagePlat: "loaded_fries",
-                prix: 6.50
+                prix: 2.00
             ),
         ],
         horaireOuverture: OuvertureResto(
@@ -169,7 +169,7 @@ var restaurants: [Restaurant] = [
         tag: [.sain, .vegetalien, .sans_gluten, .cosy],
         estVisite: false,
         adresse: "14 Rue de la Clef, 59800 Lille",
-        image: "lapalmeraie",
+        image: "weareara",
         latitude: 50.63680,
         longitude: 3.06500
     ),
@@ -206,10 +206,10 @@ var restaurants: [Restaurant] = [
         categorie: .brasserie,
         typologie: .gastronomie,
         viandes: [.poisson],
-        tag: [.poisson, .sain, .fait_maison],
+        tag: [.poisson, .sain, .fait_maison, .sushi],
         estVisite: false,
         adresse: "10 Rue du Pas, 59800 Lille",
-        image: "lecedreduliban",
+        image: "ecumedesmers",
         latitude: 50.63727,
         longitude: 3.06151
     ),
@@ -248,7 +248,7 @@ var restaurants: [Restaurant] = [
         tag: [.cosy, .plats_mijotes, .fait_maison],
         estVisite: true,
         adresse: "53 Rue de la Monnaie, 59800 Lille",
-        image: "speedburger",
+        image: "porthos",
         latitude: 50.64108,
         longitude: 3.06253,
         isLiked: true
@@ -330,7 +330,7 @@ var restaurants: [Restaurant] = [
         tag: [.sain, .vegetalien, .fait_maison, .cosy],
         estVisite: false,
         adresse: "10 Rue Jeanne Maillotte, 59800 Lille",
-        image: "thedublincorner",
+        image: "itsybitsy",
         latitude: 50.63176,
         longitude: 3.06298
     ),
@@ -350,7 +350,7 @@ var restaurants: [Restaurant] = [
             Plat(
                 nomPlat: "Cheesecake",
                 descriptionPlat: "Coulis de fruits rouges.",
-                imagePlat: "dessert",
+                imagePlat: "cheesecake",
                 prix: 4.50
             ),
         ],
@@ -370,7 +370,7 @@ var restaurants: [Restaurant] = [
         tag: [.fait_maison, .sain],
         estVisite: true,
         adresse: "15 Rue des Ponts de Comines, 59800 Lille",
-        image: "thedublincorner",
+        image: "honeyandpie",
         latitude: 50.63690,
         longitude: 3.06720
     ),
@@ -452,7 +452,7 @@ var restaurants: [Restaurant] = [
         tag: [.halal, .sain, .fait_maison, .vegetalien],
         estVisite: true,
         adresse: "34 Rue de l'Hôpital Militaire, 59800 Lille",
-        image: "thedublincorner",
+        image: "layalina",
         latitude: 50.63500,
         longitude: 3.06100
     ),
@@ -532,7 +532,7 @@ var restaurants: [Restaurant] = [
         tag: [.halal, .plats_mijotes, .cosy],
         estVisite: true,
         adresse: "12 Place de la Gare, 59000 Lille",
-        image: "thedublincorner",
+        image: "mamounia",
         latitude: 50.63660,
         longitude: 3.06940
     ),
@@ -574,7 +574,7 @@ var restaurants: [Restaurant] = [
         tag: [.halal, .fait_maison],
         estVisite: false,
         adresse: "88 Rue des Postes, 59000 Lille",
-        image: "thedublincorner",
+        image: "efes",
         latitude: 50.62600,
         longitude: 3.05400
     ),
@@ -614,7 +614,7 @@ var restaurants: [Restaurant] = [
         tag: [.cosy, .fait_maison, .sans_gluten],
         estVisite: true,
         adresse: "20 Rue de Gand, 59800 Lille",
-        image: "thedublincorner",
+        image: "meetpeople",
         latitude: 50.64185,
         longitude: 3.06573
     ),
@@ -681,4 +681,89 @@ let plats: [Plat] = [
         imagePlat: "gravlax",
         prix: 19.00
     ),
+]
+
+
+
+let pseudosData = [
+    // --- Foodies & Gourmands ---
+    "Gourmet_Lille", "Tasty_Life", "Burger_Lover_59", "Pizza_Addict", "Le_Bon_Vivant",
+    "Sucré_Salé", "Croque_Monsieur", "Chef_Panda", "Yummy_Julie", "Gastronome_Amateur",
+    "Bistrot_Lover", "Healthy_Vibes", "Fan_De_Sushi", "Choco_Addict", "Brunch_Queen",
+    
+    // --- Classiques (Prénom + Initiale/Chiffre) ---
+    "Thomas_L", "Marie_Dupond", "Lucas1990", "Sophie_M", "Julien_C",
+    "Camille.B", "Nico_59", "Sarah_Lille", "Kevin_Du59", "Elodie_M",
+    "Antoine_R", "Celine_D", "Maxime_L", "Pauline_75", "Alexandre_B",
+    
+    // --- Lifestyle & Fun ---
+    "Traveler_Max", "Sunny_Day", "City_Walker", "Night_Owl", "Weekend_Vibes",
+    "Happy_Family", "Student_Life", "Coffee_Time", "Green_Spirit", "Urban_Food",
+    "Zouzou_59", "Kika_Love", "Juju_Fit", "Alex_The_Great", "Doudou_Cool",
+    
+    // --- Locaux (Nord) ---
+    "Ch_ti_Gourmand", "Frites_Forever", "Grand_Place_Fan", "Nordiste_Fier", "Lille_Ma_Ville",
+    "Vieux_Lille_Lover", "Rijsel_Boy", "Miss_Maroilles", "Biloute_59", "Ch_ti_Biloute"
+]
+
+let commentairesData = [
+    // --- TOP TIER (Extrêmement positif) ---
+    "C'est sans doute le meilleur repas que j'ai mangé depuis longtemps ! Une tuerie.",
+    "Un service aux petits soins et une équipe adorable. On s'y sent comme à la maison.",
+    "Une véritable explosion de saveurs, je recommande les yeux fermés !",
+    "L'ambiance est chaleureuse et la déco est magnifique. Parfait pour une soirée réussie.",
+    "Une adresse incontournable, tout était parfait du début à la fin. Bravo !",
+    "Des plats copieux, gourmands et magnifiquement présentés. On en a pour son argent.",
+    "On sent que les produits sont frais et de grande qualité. Un pur régal !",
+    "Gardez absolument de la place pour le dessert, c'était divin !",
+    "J'y retournerai très vite, c'est devenu mon restaurant préféré à Lille.",
+    "Bravo au chef, la cuisson était maîtrisée à la perfection et les sauces incroyables.",
+    
+    // --- NOURRITURE & SAVEURS ---
+    "Les assaisonnements étaient justes parfaits, rien à redire.",
+    "Une cuisine authentique qui fait du bien au moral.",
+    "J'ai pris le plat du jour et je n'ai pas été déçu, c'était excellent.",
+    "Le pain était frais et croustillant, un détail qui fait la différence.",
+    "Les options végétariennes sont vraiment travaillées et savoureuses.",
+    "La viande était tendre à souhait, un vrai plaisir.",
+    "Des saveurs originales que je n'avais jamais goûtées ailleurs.",
+    "Tout est fait maison et ça se sent dès la première bouchée.",
+    "Le dressage des assiettes est digne d'un grand restaurant gastronomique.",
+    "Le café gourmand porte très bien son nom, très généreux !",
+
+    // --- SERVICE & AMBIANCE ---
+    "Le personnel est très souriant et de bon conseil pour le vin.",
+    "Service rapide et efficace, parfait pour une pause déjeuner.",
+    "Le patron est venu nous saluer, une attention très sympathique.",
+    "L'ambiance musicale était top, ni trop fort ni trop bas.",
+    "Un cadre cosy et intimiste, idéal pour un rendez-vous amoureux.",
+    "On a passé un super moment entre amis, on a bien rigolé avec le serveur.",
+    "La terrasse est très agréable dès qu'il y a un rayon de soleil.",
+    "Restaurant très propre et bien tenu, c'est rassurant.",
+    "L'équipe en salle est dynamique et très professionnelle.",
+    "Une atmosphère détendue, on ne nous a pas pressés pour partir.",
+
+    // --- RAPPORT QUALITÉ / PRIX & GÉNÉRAL ---
+    "Excellent rapport qualité-prix, je suis bluffé.",
+    "Pour la qualité des produits, l'addition est plus que correcte.",
+    "Une belle découverte, je ne connaissais pas du tout ce quartier.",
+    "Pensez à réserver car c'était complet, la rançon du succès !",
+    "Une petite pépite cachée que je suis content d'avoir trouvée.",
+    "Je valide à 100%, allez-y foncez !",
+    "Une expérience culinaire que je n'oublierai pas de sitôt.",
+    "Merci pour ce moment de partage et de gourmandise.",
+    "C'est rare de trouver une telle qualité de service de nos jours.",
+    "Tout simplement merci, nous reviendrons avec grand plaisir.",
+
+    // --- COURTS & EFFICACES ---
+    "Superbe !",
+    "Un régal.",
+    "Juste parfait.",
+    "A tester absolument.",
+    "Miam !",
+    "Une valeur sûre.",
+    "Top du top.",
+    "Délicieux moment.",
+    "Je recommande !",
+    "5 étoiles méritées."
 ]

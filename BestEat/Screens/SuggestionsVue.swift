@@ -1,26 +1,46 @@
-//
-//  SuggestionsVue.swift
-//  BestEat
-//
-//  Created by apprenant98 on 11/12/2025.
-//
-
 import SwiftUI
 
 struct SuggestionsVue: View {
     
+    // --- CRITÈRES REÇUS ---
     let viande: Viande
     let regime: RegimeAlimentaire
+    let budget: Budget
     
     // --- FILTRE LOGIQUE ---
     var restaurantsSuggeres: [Restaurant] {
         restaurants.filter { resto in
-            resto.viandes.contains(viande)
-            /// Implémentation non faite car trop compliquée à gérer
-            // && resto.tag.contains { $0.rawValue == regime.rawValue }
+            
+            let matchViande = resto.viandes.contains(viande)
+            
+            let matchBudget: Bool
+            
+            if resto.menu.isEmpty {
+                matchBudget = false
+            } else {
+                let totalPrix = resto.menu.reduce(0.0) { $0 + $1.prix }
+                let prixMoyen = totalPrix / Double(resto.menu.count)
+                
+                switch budget {
+                case .petit:
+                    matchBudget = prixMoyen <= 5
+                    
+                case .moyen:
+                    matchBudget = prixMoyen <= 10
+                    
+                case .grand:
+                    matchBudget = prixMoyen <= 20
+                    
+                case .gros:
+                    matchBudget = true
+                }
+            }
+            
+            return matchViande && matchBudget
         }
     }
     
+    // --- MISE EN PAGE ---
     let colonnes = [
         GridItem(.flexible(), spacing: 15),
         GridItem(.flexible(), spacing: 15)
@@ -42,26 +62,27 @@ struct SuggestionsVue: View {
                                 .font(.custom("Redaction-Bold", size: 32))
                                 .foregroundStyle(Color("BrownText"))
                             
-                            Text("Basé sur \(viande.rawValue.lowercased()) & \(regime.rawValue.lowercased())")
-                                .font(.custom("Redaction-Regular", size: 18))
+                            Text("Basé sur \(viande.rawValue.lowercased()) & budget max \(budget.rawValue)")
+                                .font(.custom("Redaction-Regular", size: 16))
                                 .foregroundStyle(Color("DeepOrange"))
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal)
                         }
                         .padding(.top, 10)
-                        .multilineTextAlignment(.center)
                         
-                        // --- GRILLE RÉSULTATS ---
+                        // --- RÉSULTATS ---
                         if restaurantsSuggeres.isEmpty {
                             ContentUnavailableView(
                                 "Aucun résultat",
                                 systemImage: "fork.knife.circle",
-                                description: Text("Essayez de modifier vos critères pour trouver une pépite !")
+                                description: Text("Aucun restaurant trouvé pour ce budget (\(budget.rawValue)) avec cette viande.")
                             )
                             .foregroundStyle(Color("BrownText"))
                             .padding(.top, 50)
+                            
                         } else {
                             LazyVGrid(columns: colonnes, spacing: 20) {
                                 ForEach(restaurantsSuggeres) { resto in
-                                    // Lien vers le détail
                                     NavigationLink {
                                         RestaurantInfoDetails(restaurant: resto)
                                     } label: {
@@ -79,12 +100,12 @@ struct SuggestionsVue: View {
             .onAppear() {
                 setupCustomNavBar()
             }
-            
             .navigationBarTitleDisplayMode(.inline)
             .toolbarRole(.editor)
         }
     }
     
+    // texte de la navbar
     func setupCustomNavBar() {
         let standard = UINavigationBarAppearance()
         standard.configureWithOpaqueBackground()
@@ -92,7 +113,7 @@ struct SuggestionsVue: View {
         standard.backgroundColor = UIColor(named: "BackgroundCream")?.withAlphaComponent(0.5)
 
         standard.largeTitleTextAttributes = [
-            .font: UIFont(name: "Redaction-Bold", size: 34) ?? UIFont.systemFont(ofSize: 34),
+            .font: UIFont(name: "Redaction-Bold", size: 32) ?? UIFont.systemFont(ofSize: 34),
             .foregroundColor: UIColor(named: "BrownText") ?? UIColor.brown
         ]
         standard.titleTextAttributes = [
@@ -110,7 +131,6 @@ struct SuggestionsVue: View {
     }
 }
 
-
 #Preview {
-    SuggestionsVue(viande: .boeuf, regime: .halal)
+    SuggestionsVue(viande: .boeuf, regime: .halal, budget: .grand)
 }

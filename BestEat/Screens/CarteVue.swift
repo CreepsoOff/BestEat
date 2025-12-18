@@ -13,48 +13,53 @@ struct CarteVue: View {
     var namespace: Namespace.ID?
     var showFullMap: Binding<Bool>?
     
+    // --- ÉTAT ---
+    // Lille
     @State private var position: MapCameraPosition = .region(
         MKCoordinateRegion(
-            center: CLLocationCoordinate2D(
-                latitude: 50.6333,
-                longitude: 3.0667
-            ),
+            center: CLLocationCoordinate2D(latitude: 50.6333, longitude: 3.0667),
             span: MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)
         )
     )
+    
+    @State private var selectedRestaurant: Restaurant?
     
     var body: some View {
         NavigationStack {
             ZStack(alignment: .topTrailing) {
                 
-                // MAP
-                VStack {
-                    Group {
-                        if let namespace {
-                            Map(position: $position) {
-                                ForEach(restaurants) { restaurant in
-                                    annotation(pour: restaurant)
+                // --- MAP ---
+                Map(position: $position) {
+                    ForEach(restaurants) { restaurant in
+                        Annotation(
+                            "",
+                            coordinate: CLLocationCoordinate2D(
+                                latitude: restaurant.latitude,
+                                longitude: restaurant.longitude
+                            )
+                        ) {
+                            CustomMapPin(restaurant: restaurant, isSelected: selectedRestaurant?.id == restaurant.id)
+                                .onTapGesture {
+                                    withAnimation(.spring()) {
+                                        selectedRestaurant = restaurant
+                                    }
                                 }
-                            }
-                            .matchedGeometryEffect(id: "map", in: namespace)
-                        } else {
-                            Map(position: $position) {
-                                ForEach(restaurants) { restaurant in
-                                    annotation(pour: restaurant)
-                                }
-                            }
                         }
                     }
                 }
+                .mapControls {
+                    MapCompass()
+                    MapScaleView()
+                }
                 .ignoresSafeArea()
             }
+            // --- BARRE DE NAVIGATION ---
             .toolbar {
                 ToolbarItem(placement: .principal) {
                     Text("Carte")
                         .font(.custom("Redaction-Regular", size: 32))
-                        .foregroundStyle(.brownText)
+                        .foregroundStyle(Color("BrownText"))
                         .padding(.top, 10)
-                    
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
@@ -62,41 +67,36 @@ struct CarteVue: View {
                         MonProfilVue()
                     } label: {
                         Image(systemName: "person.fill")
-                            .foregroundStyle(.brownText)
+                            .foregroundStyle(Color("BrownText"))
                     }
                 }
             }
-        }
-    }
-    
-    func annotation(pour restaurant: Restaurant) -> Annotation<Text, some View> {
-        Annotation(
-            restaurant.nom,
-            coordinate: CLLocationCoordinate2D(
-                latitude: restaurant.latitude,
-                longitude: restaurant.longitude
-            )
-        ) {
-            VStack {
-                Image(systemName: "fork.knife.circle.fill")
-                    .foregroundColor(.red)
-                    .font(.title2)
-                
-                Text(restaurant.nom)
-                    .font(.caption2)
-                    .fontWeight(.semibold)
-                    .padding(3)
-                    .background(Color.white.opacity(0.8))
-                    .cornerRadius(5)
+            // --- LA SHEET ---
+            .sheet(item: $selectedRestaurant) { restaurant in
+                NavigationStack {
+                    RestaurantInfoDetails(restaurant: restaurant)
+                        .toolbar {
+                                        ToolbarItem(placement: .topBarTrailing) {
+                                            Button {
+                                                selectedRestaurant = nil
+                                            } label: {
+                                                Image(systemName: "xmark")
+                                                    .font(.system(size: 18))
+                                            }
+                                            .buttonStyle(.glassProminent)
+                                        }
+                                    }
+                }
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+                .presentationCornerRadius(25)
             }
-            .shadow(radius: 3)
         }
     }
 }
 
+
+
 #Preview {
-    CarteVue(
-        namespace: nil,
-        showFullMap: nil
-    )
+    CarteVue()
 }

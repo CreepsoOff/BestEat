@@ -65,7 +65,7 @@ class Plat: Identifiable {
     var isFavori: Bool
     let prix: Double
     
-    init(id: UUID = UUID(), nomPlat: String, descriptionPlat: String, imagePlat: String, isFavori: Bool = false, prix: Double) {
+    init(id: UUID = UUID(), nomPlat: String, descriptionPlat: String, imagePlat: String, isFavori: Bool = false, prix: Double = 0.00) {
         self.id = id
         self.nomPlat = nomPlat
         self.descriptionPlat = descriptionPlat
@@ -240,6 +240,36 @@ struct Profil {
     var emotion: [Emotion]
 }
 
+
+
+// 1. Structure d'un Avis
+struct Avis: Identifiable {
+    let id = UUID()
+    let auteur: String
+    let note: Int // Sur 5
+    let commentaire: String
+    let date: Date
+}
+
+func genererAvisAleatoires() -> [Avis] {
+    let nombreAvis = Int.random(in: 5...20)
+    var resultats: [Avis] = []
+    
+    for _ in 0..<nombreAvis {
+        let dateAleatoire = Date().addingTimeInterval(TimeInterval(-Int.random(in: 86400...15000000)))
+        let noteAleatoire = Int.random(in: 3...5)
+        
+        let nouvelAvis = Avis(
+            auteur: pseudosData.randomElement() ?? "Anonyme",
+            note: noteAleatoire,
+            commentaire: commentairesData.randomElement() ?? "Pas de commentaire.",
+            date: dateAleatoire
+        )
+        resultats.append(nouvelAvis)
+    }
+    
+    return resultats.sorted(by: { $0.date > $1.date })
+}
 
 
 extension Emotion: CaseIterable, Identifiable {

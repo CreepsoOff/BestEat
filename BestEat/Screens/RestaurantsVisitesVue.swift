@@ -1,10 +1,3 @@
-//
-//  RestaurantsVisitesVue.swift
-//  BestEat
-//
-//  Created by apprenant98 on 11/12/2025.
-//
-
 import SwiftUI
 
 // --- GRID ITEM ---
@@ -22,17 +15,13 @@ struct RestaurantGridItem: View {
                 .padding(.top, 5)
             
             ZStack(alignment: .topTrailing) {
-                if let imagePlat = resto.menu.first?.imagePlat {
-                    Image(imagePlat)
+           
+                    Image(resto.image)
                         .resizable()
                         .scaledToFill()
                         .frame(width: imageWidth, height: imageWidth * 0.75)
                         .clipped()
-                } else {
-                    Rectangle()
-                        .fill(Color.gray.opacity(0.3))
-                        .frame(width: imageWidth, height: imageWidth * 0.75)
-                }
+                
                 
                 // BOUTON LIKE
                 Button {
@@ -123,7 +112,7 @@ struct RestaurantsVisitesVue: View {
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Text("Restaurants visités")
-                    .font(.custom("Redaction-Regular", size: 28))
+                    .font(.custom("Redaction-Regular", size: 32))
                 
                     .foregroundStyle(Color("BrownText"))
                     .padding(.top, 10)

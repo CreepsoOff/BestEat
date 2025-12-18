@@ -26,12 +26,18 @@ struct RechercheVue: View {
         }
         
         // 2. Filtre Tags
-
         if !tagsSelectionnes.isEmpty {
             resultats = resultats.filter { restaurant in
-
-                restaurant.tag.contains { tagDuResto in
-                    tagsSelectionnes.contains(tagDuResto)
+                
+                if tagsSelectionnes.contains(.vegetalien) && !restaurant.viandes.isEmpty {
+                    return false
+                }
+                
+                return tagsSelectionnes.contains { tagSelectionne in
+                    if tagSelectionne == .poisson {
+                        return restaurant.tag.contains(.poisson) || restaurant.viandes.contains(.poisson)
+                    }
+                    return restaurant.tag.contains(tagSelectionne)
                 }
             }
         }
@@ -39,7 +45,6 @@ struct RechercheVue: View {
         // 3. Filtre Viandes
         if !viandesSelectionnees.isEmpty {
             resultats = resultats.filter { restaurant in
-  
                 restaurant.viandes.contains { viandeDuResto in
                     viandesSelectionnees.contains(viandeDuResto)
                 }
@@ -51,7 +56,6 @@ struct RechercheVue: View {
     
     var restosSains: [Restaurant] {
          return restaurants.filter { $0.tag.contains(.sain) }.prefix(2).map { $0 }
-
     }
     
     var body: some View {
@@ -68,7 +72,7 @@ struct RechercheVue: View {
                         HStack(spacing: 10) {
 
                             // A. Viandes
-                            ForEach([Viande.poisson, Viande.poulet, Viande.boeuf, Viande.agneau], id: \.self) { viande in
+                            ForEach([Viande.poulet, Viande.boeuf, Viande.agneau], id: \.self) { viande in
                                 BadgeFiltre(
                                     text: viande.rawValue,
                                     icon: viande.emoji,
@@ -119,7 +123,7 @@ struct RechercheVue: View {
                     } else {
                         LazyVStack {
                             
-                          
+                            
                             if !restosSains.isEmpty && rechercheTexte.isEmpty && viandesSelectionnees.isEmpty && tagsSelectionnes.isEmpty {
                                 ZStack {
                                     VStack(spacing: 12) {
@@ -169,13 +173,13 @@ struct RechercheVue: View {
                         .padding(.bottom, 80)
                     }
                 }
-                .navigationTitle("Recherche")
-                .searchable(text: $rechercheTexte, prompt: "Beef Art, Le Porthos..")
-                .background(Color("BackgroundCream"))
             }
-            .onAppear {
-                setupCustomNavBar()
-            }
+            .navigationTitle("Recherche")
+            .searchable(text: $rechercheTexte, prompt: "Beef Art, Le Porthos..")
+            .background(Color("BackgroundCream"))
+        }
+        .onAppear {
+            setupCustomNavBar()
         }
     }
     
@@ -183,7 +187,7 @@ struct RechercheVue: View {
     func setupCustomNavBar() {
         let standard = UINavigationBarAppearance()
         standard.configureWithOpaqueBackground()
-        standard.shadowColor = .clear 
+        standard.shadowColor = .clear
 
         
         standard.backgroundColor = UIColor(named: "BackgroundCream")?
@@ -214,4 +218,3 @@ struct RechercheVue: View {
 #Preview {
     RechercheVue()
 }
-
