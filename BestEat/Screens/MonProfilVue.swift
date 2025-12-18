@@ -15,6 +15,8 @@ struct MonProfilVue: View {
         regime: [.halal, .vegetarien],
         emotion: [.joie]
     )
+    @State private var showAlert: Bool = false
+    @State private var nomProfil: String = ""
     
     var body: some View {
         NavigationStack {
@@ -34,9 +36,29 @@ struct MonProfilVue: View {
                                 .clipShape(Circle())
                                 .shadow(color: .black.opacity(0.1), radius: 5)
                             
-                            Text("Mon profil")
-                                .font(.custom("Redaction-Bold", size: 34))
-                                .foregroundStyle(Color("BrownText"))
+                            HStack {
+                                Text("Bonjour \(profil.nom)")
+                                    .font(.custom("Redaction-Bold", size: 34))
+                                    .foregroundStyle(Color("BrownText"))
+                                
+                                Button {
+                                    nomProfil = profil.nom
+                                    showAlert.toggle()
+                                } label: {
+                                    Image(systemName: "pencil.circle.fill")
+                                        .font(.system(size: 24))
+                                }
+                                .alert("Entrez votre nom", isPresented: $showAlert) {
+                                    TextField("Votre nom", text: $nomProfil)
+                                    
+                                    Button("Annuler", role: .cancel) { }
+                                    
+                                    Button("Valider", action: editProfileName)
+                                        .disabled(nomProfil.isEmpty)
+                                }
+                                .foregroundStyle(.accent)
+                                
+                            }
                         }
                         .padding(.top, 20)
                         
@@ -129,6 +151,13 @@ struct MonProfilVue: View {
     }
     
     // MARK: - LOGIQUE
+    
+    private func editProfileName() {
+        // On ne sauvegarde que si ce n'est pas vide (double sécurité)
+        if !nomProfil.isEmpty {
+            profil.nom = nomProfil
+        }
+    }
     
     private func toggleRegime(_ r: RegimeAlimentaire) {
         if let index = profil.regime.firstIndex(of: r) {

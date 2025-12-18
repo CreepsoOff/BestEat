@@ -8,8 +8,10 @@
 import MapKit
 import SwiftUI
 
+// MARK: - VUE PRINCIPALE
 struct OnBoarding: View {
-    // --- ÉTATS DE SÉLECTION ---
+    
+    // --- ÉTATS ---
     @State private var selectedEmotion: Emotion = .joie
     @State private var selectedViande: Viande = .boeuf
     @State private var selectedDeplacement: ModeDeplacement = .pieds
@@ -19,13 +21,9 @@ struct OnBoarding: View {
     // --- CARTE ---
     @Namespace private var mapNamespace
     @State private var showFullMap = false
-
     @State private var position: MapCameraPosition = .region(
         MKCoordinateRegion(
-            center: CLLocationCoordinate2D(
-                latitude: 50.6333,
-                longitude: 3.0667
-            ),  // Lille
+            center: CLLocationCoordinate2D(latitude: 50.6333, longitude: 3.0667), // Lille
             span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
         )
     )
@@ -35,236 +33,224 @@ struct OnBoarding: View {
             ZStack(alignment: .top) {
                 Color("BackgroundCream").ignoresSafeArea()
                 
-                // Si la carte n'est pas en plein écran, on affiche le contenu
+                // CONTENU SCROLLABLE
                 if !showFullMap {
                     ScrollView(showsIndicators: false) {
                         VStack(alignment: .leading, spacing: 30) {
 
-                            interactiveSentenceView
-                                .padding(.top, 20)
+                            // 1. Phrase
+                            OnBoardingSentenceView(
+                                selectedEmotion: $selectedEmotion,
+                                selectedViande: $selectedViande,
+                                selectedDeplacement: $selectedDeplacement,
+                                selectedRegime: $selectedRegime,
+                                selectedBudget: $selectedBudget
+                            )
+                            .padding(.top, 20)
 
+                            // 2. Bouton Suggestions
+                            OnBoardingSuggestionsButton(
+                                viande: selectedViande,
+                                regime: selectedRegime,
+                                budget: selectedBudget
+                            )
                             
-                            // --- SUGGESTIONS ---
-                            HStack {
-                                Spacer()
-                                NavigationLink {
-                                    SuggestionsVue(
-                                        viande: selectedViande,
-                                        regime: selectedRegime,
-                                        budget: selectedBudget
-                                    )
-                                } label: {
-                                    HStack {
-                                        Text("Accéder à mes suggestions")
-                                            .font(.custom("Redaction-Bold", size: 18))
-                                        Image(systemName: "arrow.right")
-                                            .bold()
-                                    }
-                                    .foregroundColor(.white)
-                                    .padding(.vertical, 16)
-                                    .padding(.horizontal, 24)
-                                    .background(Color("BrownText")) // Couleur principale
-                                    .clipShape(Capsule())
-                                    .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
+                            // 3. Mini-Map
+                            OnBoardingMiniMap(
+                                position: $position,
+                                mapNamespace: mapNamespace,
+                                onTap: {
+                                    withAnimation(.easeInOut(duration: 0.35)) { showFullMap = true }
                                 }
-                                Spacer()
-                            }
-                            
-                            // --- CARTE MINIATURE ---
-                            Map(position: $position)
-                                .frame(height: 300)
-                                .clipShape(RoundedRectangle(cornerRadius: 30))
-                                .matchedGeometryEffect(id: "map", in: mapNamespace)
-                                .onTapGesture {
-                                    withAnimation(.easeInOut(duration: 0.35)) {
-                                        showFullMap = true
-                                    }
-                                }
-                                .padding(.horizontal)
-                            
+                            )
+                            .padding(.horizontal)
                         }
                     }
                 }
                 
+                // VUE CARTE PLEIN ÉCRAN
                 if showFullMap {
-                    CarteVue(
-                        namespace: mapNamespace,
-                        showFullMap: $showFullMap
-                    )
-                    .zIndex(1)
+                    CarteVue(namespace: mapNamespace, showFullMap: $showFullMap)
+                        .zIndex(1)
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .principal) {
-                    Text(showFullMap ? "Carte" : "Mes envies")
-                        .font(.custom("Redaction-Regular", size: 32))
-                        .padding(.top, 10)
-                        .foregroundStyle(.brownText)
-                        .contentTransition(.numericText())
-                        .animation(.bouncy, value: showFullMap)
-                }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    if showFullMap {
-                        Button {
-                            withAnimation(.easeInOut(duration: 0.35)) {
-                                showFullMap = false
-                            }
-                        } label: {
-                            Image(systemName: "xmark")
-                                .bold()
-                                .foregroundStyle(.brownText)
-                        }
-                    } else {
-                        NavigationLink {
-                            MonProfilVue()
-                        } label: {
-                            Image(systemName: "person.fill")
-                                .foregroundStyle(.brownText)
-                        }
-                    }
-                }
+                OnBoardingToolbar(showFullMap: $showFullMap)
             }
         }
     }
+}
 
-    private var interactiveSentenceView: some View {
+// MARK: - SOUS-VUES (COMPOSANTS)
+
+// 1. PHRASE INTERACTIVE
+struct OnBoardingSentenceView: View {
+    @Binding var selectedEmotion: Emotion
+    @Binding var selectedViande: Viande
+    @Binding var selectedDeplacement: ModeDeplacement
+    @Binding var selectedRegime: RegimeAlimentaire
+    @Binding var selectedBudget: Budget
+    
+    var body: some View {
         VStack(alignment: .leading, spacing: 12) {
 
+            // Émotion
             Menu {
                 ForEach(Emotion.allCases, id: \.self) { emotion in
-                    Button(emotion.rawValue) {
-                        selectedEmotion = emotion
-                    }
+                    Button(emotion.rawValue) { selectedEmotion = emotion }
                 }
             } label: {
-                emotionLine()
+                SentenceLine(prefix: "Je me sens.. ", value: selectedEmotion.rawValue, suffix: " et j'ai", color: .deepOrange)
             }
-            .buttonStyle(.plain)
 
+            // Viande
             Menu {
                 ForEach(Viande.allCases, id: \.self) { v in
-                    Button(v.rawValue) {
-                        selectedViande = v
-                    }
+                    Button(v.rawValue) { selectedViande = v }
                 }
             } label: {
-                viandeLine()
+                SentenceLine(prefix: "envie de.. ", value: selectedViande.rawValue, suffix: " je vais", color: .lightOrange)
             }
-            .buttonStyle(.plain)
 
+            // Déplacement
             Menu {
                 ForEach(ModeDeplacement.allCases, id: \.self) { m in
-                    Button(m.rawValue) {
-                        selectedDeplacement = m
-                    }
+                    Button(m.rawValue) { selectedDeplacement = m }
                 }
             } label: {
-                deplacementLine()
+                SentenceLine(prefix: "me déplacer.. ", value: selectedDeplacement.rawValue, suffix: " et il", color: .deepOrange)
             }
-            .buttonStyle(.plain)
 
+            // Régime
             Menu {
                 ForEach(RegimeAlimentaire.allCases, id: \.self) { r in
-                    Button(r.rawValue) {
-                        selectedRegime = r
-                    }
+                    Button(r.rawValue) { selectedRegime = r }
                 }
             } label: {
-                regimeLine()
+                SentenceLine(prefix: "faut savoir que je mange.. ", value: selectedRegime.rawValue, suffix: "", color: .lightOrange)
             }
-            .buttonStyle(.plain)
 
+            // Budget
             Menu {
                 ForEach(Budget.allCases, id: \.self) { b in
-                    Button(b.rawValue) {
-                        selectedBudget = b
-                    }
+                    Button(b.rawValue) { selectedBudget = b }
                 }
             } label: {
-                budgetLine()
+                SentenceLine(prefix: "enfin, il faut savoir que j'ai un budget de ", value: selectedBudget.rawValue, suffix: "", color: .deepOrange)
             }
-            .buttonStyle(.plain)
 
         }
         .padding(.horizontal)
+        .buttonStyle(.plain)
     }
+}
 
-    // --- FONCTIONS TEXTE ---
-
-    private func emotionLine() -> Text {
+struct SentenceLine: View {
+    let prefix: String
+    let value: String
+    let suffix: String
+    let color: Color
+    
+    var body: some View {
         Text(
             """
-            \(Text("Je me sens.. ")
+            \(Text(prefix)
                 .font(.custom("Redaction-Regular", size: 24))
-                .foregroundStyle(.brownText))\
-            \(Text("\(selectedEmotion.rawValue.lowercased()) ⌄")
+                .foregroundStyle(Color("BrownText")))\
+            \(Text("\(value.lowercased()) ⌄")
                 .font(.custom("Redaction-Bold", size: 40))
-                .foregroundStyle(.deepOrange))\
-            \(Text(" et j'ai")
+                .foregroundStyle(color))\
+            \(Text(suffix.isEmpty ? "" : suffix)
                 .font(.custom("Redaction-Regular", size: 24))
-                .foregroundStyle(.brownText))
+                .foregroundStyle(Color("BrownText")))
             """
         )
     }
+}
 
-    private func viandeLine() -> Text {
-        Text(
-            """
-            \(Text("envie de.. ")
-                .font(.custom("Redaction-Regular", size: 24))
-                .foregroundStyle(.brownText))\
-            \(Text("\(selectedViande.rawValue.lowercased()) ⌄")
-                .font(.custom("Redaction-Bold", size: 40))
-                .foregroundStyle(.lightOrange))\
-            \(Text(" je vais")
-                .font(.custom("Redaction-Regular", size: 24))
-                .foregroundStyle(.brownText))
-            """
-        )
+struct OnBoardingSuggestionsButton: View {
+    let viande: Viande
+    let regime: RegimeAlimentaire
+    let budget: Budget
+    
+    var body: some View {
+        HStack {
+            Spacer()
+            NavigationLink {
+                SuggestionsVue(
+                    viande: viande,
+                    regime: regime,
+                    budget: budget
+                )
+            } label: {
+                HStack {
+                    Text("Accéder à mes suggestions")
+                        .font(.custom("Redaction-Bold", size: 18))
+                    Image(systemName: "arrow.right")
+                        .bold()
+                }
+                .foregroundColor(.white)
+                .padding(.vertical, 16)
+                .padding(.horizontal, 24)
+                .background(Color("BrownText"))
+                .clipShape(Capsule())
+                .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
+            }
+            Spacer()
+        }
     }
+}
 
-    private func deplacementLine() -> Text {
-        Text(
-            """
-            \(Text("me déplacer.. ")
-                .font(.custom("Redaction-Regular", size: 24))
-                .foregroundStyle(.brownText))\
-            \(Text("\(selectedDeplacement.rawValue.lowercased()) ⌄")
-                .font(.custom("Redaction-Bold", size: 40))
-                .foregroundStyle(.deepOrange))\
-            \(Text(" et il")
-                .font(.custom("Redaction-Regular", size: 24))
-                .foregroundStyle(.brownText))
-            """
-        )
+// 3. MINI MAP
+struct OnBoardingMiniMap: View {
+    @Binding var position: MapCameraPosition
+    let mapNamespace: Namespace.ID
+    let onTap: () -> Void
+    
+    var body: some View {
+        Map(position: $position)
+            .frame(height: 300)
+            .clipShape(RoundedRectangle(cornerRadius: 30))
+            .matchedGeometryEffect(id: "map", in: mapNamespace)
+            .onTapGesture(perform: onTap)
     }
+}
 
-    private func regimeLine() -> Text {
-        Text(
-            """
-            \(Text("faut savoir que je mange.. ")
-                .font(.custom("Redaction-Regular", size: 24))
-                .foregroundStyle(.brownText))\
-            \(Text("\(selectedRegime.rawValue.lowercased()) ⌄")
-                .font(.custom("Redaction-Bold", size: 38))
-                .foregroundStyle(.lightOrange))
-            """
-        )
-    }
-
-    private func budgetLine() -> Text {
-        Text(
-            """
-            \(Text("enfin, il faut savoir que j'ai un budget de ")
-                .font(.custom("Redaction-Regular", size: 24))
-                .foregroundStyle(.brownText))\
-            \(Text("\(selectedBudget.rawValue) ⌄")
-                .font(.custom("Redaction-Bold", size: 40))
-                .foregroundStyle(.deepOrange))
-            """
-        )
+// 4. TOOLBAR
+struct OnBoardingToolbar: ToolbarContent {
+    @Binding var showFullMap: Bool
+    
+    var body: some ToolbarContent {
+        ToolbarItem(placement: .principal) {
+            Text(showFullMap ? "Carte" : "Mes envies")
+                .font(.custom("Redaction-Regular", size: 32))
+                .padding(.top, 10)
+                .foregroundStyle(Color("BrownText"))
+                .contentTransition(.numericText())
+                .animation(.bouncy, value: showFullMap)
+        }
+        
+        ToolbarItem(placement: .topBarTrailing) {
+            if showFullMap {
+                Button {
+                    withAnimation(.easeInOut(duration: 0.35)) {
+                        showFullMap = false
+                    }
+                } label: {
+                    Image(systemName: "xmark")
+                        .bold()
+                        .foregroundStyle(Color("BrownText"))
+                }
+            } else {
+                NavigationLink {
+                    MonProfilVue()
+                } label: {
+                    Image(systemName: "person.fill")
+                        .foregroundStyle(Color("BrownText"))
+                }
+            }
+        }
     }
 }
 

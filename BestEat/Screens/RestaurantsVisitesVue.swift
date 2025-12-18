@@ -41,20 +41,7 @@ struct RestaurantGridItem: View {
             }
             .cornerRadius(12)
             
-            // SYSTEME DE NOTATION
-            HStack(spacing: 4) {
-                ForEach(1...5, id: \.self) { index in
-                    Image(systemName: index <= resto.noteEtoile ? "star.fill" : "star")
-                        .foregroundColor(.yellow)
-                        .font(.system(size: 16))
-                        .onTapGesture {
-                            withAnimation(.spring()) {
-                                resto.noteEtoile = index
-                            }
-                        }
-                }
-            }
-            .padding(.bottom, 10)
+
         }
         .frame(width: imageWidth)
         .background(Color.white)
@@ -106,7 +93,6 @@ struct RestaurantsVisitesVue: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        // On laisse le titre vide pour utiliser le ToolbarItem principal
         .navigationTitle("")
         
         .toolbar {
