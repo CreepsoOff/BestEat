@@ -7,14 +7,24 @@
 
 import SwiftUI
 
+// MARK: - VUE PRINCIPALE
 struct MonProfilVue: View {
     
+    // --- PERSISTENCE (APP STORAGE) ---
+    // Ces clés permettent de sauvegarder les données et de les partager avec l'OnBoarding
+    @AppStorage("userProfileName") private var storedName: String = "Gourmet"
+    @AppStorage("userBudget") private var storedBudget: String = Budget.moyen.rawValue
+    @AppStorage("userEmotion") private var storedEmotion: String = Emotion.joie.rawValue
+    @AppStorage("userRegime") private var storedRegime: String = "" // Stocké sous forme de String séparé par des virgules
+    
+    // État local synchronisé
     @State private var profil = Profil(
-        nom: "Gourmet",
+        nom: "Achraf",
         budget: .moyen,
         regime: [.halal, .vegetarien],
         emotion: [.joie]
     )
+    
     @State private var showAlert: Bool = false
     @State private var nomProfil: String = ""
     
@@ -26,163 +36,249 @@ struct MonProfilVue: View {
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 30) {
                         
-                        // --- EN-TÊTE ---
-                        VStack(spacing: 10) {
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .frame(width: 80, height: 80)
-                                .foregroundStyle(Color("BrownText"))
-                                .background(Color.white)
-                                .clipShape(Circle())
-                                .shadow(color: .black.opacity(0.1), radius: 5)
+                        // 1. EN-TÊTE
+                        ProfilHeaderView(
+                            nom: profil.nom,
+                            onEdit: {
+                                nomProfil = profil.nom
+                                showAlert = true
+                            }
+                        )
+                        .alert("Entrez votre nom", isPresented: $showAlert) {
+                            TextField("Votre nom", text: $nomProfil)
                             
-                            HStack {
-                                Text("Bonjour \(profil.nom)")
-                                    .font(.custom("Redaction-Bold", size: 34))
-                                    .foregroundStyle(Color("BrownText"))
-                                
-                                Button {
-                                    nomProfil = profil.nom
-                                    showAlert.toggle()
-                                } label: {
-                                    Image(systemName: "pencil.circle.fill")
-                                        .font(.system(size: 24))
-                                }
-                                .alert("Entrez votre nom", isPresented: $showAlert) {
-                                    TextField("Votre nom", text: $nomProfil)
-                                    
-                                    Button("Annuler", role: .cancel) { }
-                                    
-                                    Button("Valider", action: editProfileName)
-                                        .disabled(nomProfil.isEmpty)
-                                }
-                                .foregroundStyle(.accent)
-                                
-                            }
-                        }
-                        .padding(.top, 20)
-                        
-                        // --- SECTION BUDGET ---
-                        VStack(alignment: .leading, spacing: 15) {
-                            sectionTitle("Budget")
+                            // Annuler ferme uniquement la pop-up
+                            Button("Annuler", role: .cancel) { }
                             
-                            HStack(spacing: 8) {
-                                ForEach(Budget.allCases, id: \.self) { budget in
-                                    BudgetCard(
-                                        budget: budget,
-                                        isSelected: profil.budget == budget,
-                                        action: { withAnimation { profil.budget = budget } }
-                                    )
-                                }
+                            // Valider désactivé si vide
+                            Button("Valider") {
+                                saveName()
                             }
+                            .disabled(nomProfil.isEmpty)
                         }
-                        .padding(.horizontal)
                         
-                        // --- SECTION RÉGIME ---
-                        VStack(alignment: .leading, spacing: 15) {
-                            sectionTitle("Régime")
-                            
-                            VStack(spacing: 12) {
-                                ForEach(RegimeAlimentaire.allCases, id: \.self) { regime in
-                                    ToggleRow(
-                                        title: regime.rawValue.capitalized,
-                                        isSelected: profil.regime.contains(regime)
-                                    ) {
-                                        toggleRegime(regime)
-                                    }
-                                }
-                            }
-                            .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .fill(Color.white)
-                                    .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 2)
-                            )
-                        }
-                        .padding(.horizontal)
+                        // 2. BUDGET
+                        ProfilBudgetSection(selectedBudget: $profil.budget)
                         
-                        // --- SECTION ÉMOTION ---
-                        VStack(alignment: .leading, spacing: 15) {
-                            sectionTitle("Humeur actuelle")
-                            
-                            // Grille adaptative pour les émojis
-                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 60))], spacing: 20) {
-                                ForEach(Emotion.allCases) { emotion in
-                                    EmotionButton(
-                                        emotion: emotion,
-                                        isSelected: profil.emotion.contains(emotion)
-                                    ) {
-                                        toggleEmotion(emotion)
-                                    }
-                                }
-                            }
-                            .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .fill(Color.white)
-                                    .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 2)
-                            )
-                        }
-                        .padding(.horizontal)
+                        // 3. RÉGIME
+                        ProfilRegimeSection(selectedRegimes: $profil.regime)
                         
-                        // --- LIEN VERS VISITES ---
-                        NavigationLink {
-                            RestaurantsVisitesVue()
-                        } label: {
-                            HStack {
-                                Image(systemName: "book.fill")
-                                Text("Voir mes visites")
-                                    .font(.custom("Redaction-Regular", size: 18))
-                            }
-                            .foregroundColor(.white)
-                            .padding(.vertical, 16)
-                            .padding(.horizontal, 30)
-                            .background(Color("BrownText"))
-                            .clipShape(Capsule())
-                            .shadow(radius: 5)
-                        }
-                        .padding(.vertical, 30)
+                        // 4. ÉMOTION
+                        ProfilEmotionSection(selectedEmotions: $profil.emotion)
+                        
+                        // 5. BOUTON VISITES
+                        ProfilVisitsButton()
                     }
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(.hidden, for: .tabBar)
+            
+            // --- CHARGEMENT & SAUVEGARDE AUTO ---
+            .onAppear(perform: loadData)
+            .onChange(of: profil.budget) { _, newValue in storedBudget = newValue.rawValue }
+            .onChange(of: profil.regime) { _, newValue in saveRegimeToStorage(newValue) }
+            .onChange(of: profil.emotion) { _, newValue in
+                if let first = newValue.first { storedEmotion = first.rawValue }
+            }
         }
     }
     
-    // MARK: - LOGIQUE
+    // MARK: - LOGIQUE PERSISTENCE
     
-    private func editProfileName() {
-        // On ne sauvegarde que si ce n'est pas vide (double sécurité)
+    private func loadData() {
+        // Chargement Nom
+        profil.nom = storedName
+        
+        // Chargement Budget
+        if let b = Budget(rawValue: storedBudget) {
+            profil.budget = b
+        }
+        
+        // Chargement Émotion
+        if let e = Emotion(rawValue: storedEmotion) {
+            profil.emotion = [e]
+        }
+        
+        // Chargement Régime (Décodage CSV)
+        if !storedRegime.isEmpty {
+            let rawValues = storedRegime.split(separator: ",").map(String.init)
+            profil.regime = rawValues.compactMap { RegimeAlimentaire(rawValue: $0) }
+        } else {
+            profil.regime = [.halal, .vegetarien] // Défaut
+        }
+    }
+    
+    private func saveName() {
         if !nomProfil.isEmpty {
             profil.nom = nomProfil
+            storedName = nomProfil
         }
+    }
+    
+    private func saveRegimeToStorage(_ regimes: [RegimeAlimentaire]) {
+        storedRegime = regimes.map { $0.rawValue }.joined(separator: ",")
+    }
+}
+
+// MARK: - SOUS-VUES (EXTRACTED VIEWS)
+
+// 1. HEADER
+struct ProfilHeaderView: View {
+    let nom: String
+    let onEdit: () -> Void
+    
+    var body: some View {
+        VStack(spacing: 10) {
+            Image(systemName: "person.circle.fill")
+                .resizable()
+                .frame(width: 80, height: 80)
+                .foregroundStyle(Color("BrownText"))
+                .background(Color.white)
+                .clipShape(Circle())
+                .shadow(color: .black.opacity(0.1), radius: 5)
+            
+            HStack {
+                Text("Bonjour \(nom)")
+                    .font(.custom("Redaction-Bold", size: 34))
+                    .foregroundStyle(Color("BrownText"))
+                
+                Button(action: onEdit) {
+                    Image(systemName: "pencil.circle.fill")
+                        .font(.system(size: 24))
+                }
+            }
+        }
+        .padding(.top, 20)
+    }
+}
+
+// 2. BUDGET
+struct ProfilBudgetSection: View {
+    @Binding var selectedBudget: Budget
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 15) {
+            SectionTitle(text: "Budget")
+            
+            HStack(spacing: 8) {
+                ForEach(Budget.allCases, id: \.self) { budget in
+                    BudgetCard(
+                        budget: budget,
+                        isSelected: selectedBudget == budget,
+                        action: { withAnimation { selectedBudget = budget } }
+                    )
+                }
+            }
+        }
+        .padding(.horizontal)
+    }
+}
+
+// 3. RÉGIME
+struct ProfilRegimeSection: View {
+    @Binding var selectedRegimes: [RegimeAlimentaire]
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 15) {
+            SectionTitle(text: "Régime")
+            
+            VStack(spacing: 12) {
+                ForEach(RegimeAlimentaire.allCases, id: \.self) { regime in
+                    ToggleRow(
+                        title: regime.rawValue.capitalized,
+                        isSelected: selectedRegimes.contains(regime)
+                    ) {
+                        toggleRegime(regime)
+                    }
+                }
+            }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color.white)
+                    .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 2)
+            )
+        }
+        .padding(.horizontal)
     }
     
     private func toggleRegime(_ r: RegimeAlimentaire) {
-        if let index = profil.regime.firstIndex(of: r) {
-            profil.regime.remove(at: index)
+        if let index = selectedRegimes.firstIndex(of: r) {
+            selectedRegimes.remove(at: index)
         } else {
-            profil.regime.append(r)
+            selectedRegimes.append(r)
         }
+    }
+}
+
+// 4. ÉMOTION
+struct ProfilEmotionSection: View {
+    @Binding var selectedEmotions: [Emotion]
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 15) {
+            SectionTitle(text: "Humeur actuelle")
+            
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 60))], spacing: 20) {
+                ForEach(Emotion.allCases) { emotion in
+                    EmotionButton(
+                        emotion: emotion,
+                        isSelected: selectedEmotions.contains(emotion)
+                    ) {
+                        toggleEmotion(emotion)
+                    }
+                }
+            }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color.white)
+                    .shadow(color: .black.opacity(0.05), radius: 5, x: 0, y: 2)
+            )
+        }
+        .padding(.horizontal)
     }
     
     private func toggleEmotion(_ e: Emotion) {
-        if let index = profil.emotion.firstIndex(of: e) {
-            profil.emotion.remove(at: index)
-        } else {
-            profil.emotion.append(e)
-        }
+        // Une seule émotion possible : on remplace tout le tableau
+        selectedEmotions = [e]
     }
-    
-    private func sectionTitle(_ text: String) -> some View {
+}
+
+// 5. BOUTON VISITES
+struct ProfilVisitsButton: View {
+    var body: some View {
+        NavigationLink {
+            RestaurantsVisitesVue()
+        } label: {
+            HStack {
+                Image(systemName: "book.fill")
+                Text("Voir mes visites")
+                    .font(.custom("Redaction-Regular", size: 18))
+            }
+            .foregroundColor(.white)
+            .padding(.vertical, 16)
+            .padding(.horizontal, 30)
+            .background(Color("BrownText"))
+            .clipShape(Capsule())
+            .shadow(radius: 5)
+        }
+        .padding(.vertical, 30)
+    }
+}
+
+// Helper Titre
+struct SectionTitle: View {
+    let text: String
+    var body: some View {
         Text(text)
             .font(.custom("Redaction-Regular", size: 24))
             .foregroundStyle(Color("BrownText"))
     }
 }
 
-// MARK: - SOUS-VUES
+// MARK: - COMPOSANTS UI EXISTANTS
 
 struct BudgetCard: View {
     let budget: Budget
